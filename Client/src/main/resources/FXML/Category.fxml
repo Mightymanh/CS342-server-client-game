@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="CategoryController"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <MenuBar >
+        <Menu fx:id="option" text="option">
+            <MenuItem fx:id = "restart" text = "restart"/>
+            <MenuItem fx:id = "exit" text="exit"/>
+        </Menu>
+    </MenuBar>
+    <Label fx:id="title">Pick your Category</Label>
+
+    <HBox fx:id = "categoryBox">
+        <Button onAction="#displayCategory">Animal</Button>
+        <Button onAction="#displayCategory">Dog</Button>
+        <Button onAction="#displayCategory">Cat</Button>
+    </HBox>
+
+
+    <Button fx:id="enterButton" onAction="#buttonPress">Start Guess</Button>
+
+
+</VBox>

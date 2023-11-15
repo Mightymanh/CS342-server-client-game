@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ScreenController"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <HBox>
+        <Label>
+            Attempt: 6;
+        </Label>
+        <MenuBar>
+            <Menu fx:id="option" text="option">
+                <MenuItem fx:id="exit" text="exit"/>
+                <MenuItem fx:id="restart" text="restart"/>
+            </Menu>
+        </MenuBar>
+    </HBox>
+
+
+    <Label fx:id="CategoryName">
+        Dog
+    </Label>
+
+    <Label fx:id="curWord">
+        He__o
+    </Label>
+
+    <Label fx:id="promptText">
+        Pick a letter and hit Enter
+    </Label>
+
+    <VBox>
+        <HBox>
+           <Button onAction="#uploadLetter">a</Button>
+            <Button onAction="#uploadLetter">b</Button>
+            <Button onAction="#uploadLetter">c</Button>
+            <Button onAction="#uploadLetter">d</Button>
+            <Button onAction="#uploadLetter">e</Button>
+            <Button onAction="#uploadLetter">f</Button>
+            <Button onAction="#uploadLetter">g</Button>
+            <Button onAction="#uploadLetter">h</Button>
+            <Button onAction="#uploadLetter">i</Button>
+        </HBox>
+        <HBox>
+            <Button onAction="#uploadLetter">j</Button>
+            <Button onAction="#uploadLetter">k</Button>
+            <Button onAction="#uploadLetter">l</Button>
+            <Button onAction="#uploadLetter">m</Button>
+            <Button onAction="#uploadLetter">n</Button>
+            <Button onAction="#uploadLetter">o</Button>
+            <Button onAction="#uploadLetter">p</Button>
+            <Button onAction="#uploadLetter">q</Button>
+            <Button onAction="#uploadLetter">r</Button>
+        </HBox>
+        <HBox>
+            <Button onAction="#uploadLetter">s</Button>
+            <Button onAction="#uploadLetter">t</Button>
+            <Button onAction="#uploadLetter">u</Button>
+            <Button onAction="#uploadLetter">v</Button>
+            <Button onAction="#uploadLetter">w</Button>
+            <Button onAction="#uploadLetter">x</Button>
+            <Button onAction="#uploadLetter">y</Button>
+            <Button onAction="#uploadLetter">z</Button>
+        </HBox>
+    </VBox>
+
+    <HBox fx:id="ButtonField">
+        <Button fx:id="enterButton">Enter</Button>
+        <Button fx:id="nextButton" onAction="#nextButton">Next</Button>
+    </HBox>
+
+</VBox>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="EndScreenController"
+            prefHeight="400.0" prefWidth="600.0">
+
+
+    <Label fx:id="title">Game Over</Label>
+    <Label fx:id="result">Victory/Defeat</Label>
+    <Button fx:id="restart">Restart</Button>
+    <Button fx:id="exit" onAction="#exit">Exit</Button>
+</VBox>
