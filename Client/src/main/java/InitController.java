@@ -43,7 +43,10 @@ public class InitController implements Initializable {
 
     public void addEvents(){
         confirm.setOnAction((e)->{
-           // portNumberEnter();
+
+           if(!portNumberEnter()) {
+               return;
+           }
             try{
                 CategoryScene();
             } catch (Exception error) {
@@ -54,7 +57,7 @@ public class InitController implements Initializable {
         });
     }
 
-    public void portNumberEnter(){
+    public boolean portNumberEnter(){
 
         String portNum = portBox.getText();
         int portNumber;
@@ -64,16 +67,17 @@ public class InitController implements Initializable {
 
         } catch (Exception e) {
             prompt.setText("Invalid port number. Try again");
-            return;
+            return false;
         }
 
         if(!client.connect(portNumber)) {
             prompt.setText("Connection failed. Try again");
-            return;
+            return false;
         }
 
 
         prompt.setText(portNum);
+        return true;
     }
 
 
@@ -87,6 +91,7 @@ public class InitController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
         Parent Catroot = fxmlLoader.load();
         CategoryController controller = fxmlLoader.<CategoryController>getController();
+        controller.setClient(client);
 
         root.getScene().setRoot(Catroot);
 

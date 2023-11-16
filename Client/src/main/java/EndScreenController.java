@@ -17,6 +17,8 @@ public class EndScreenController implements Initializable {
     public Label result;
     public Button restart;
 
+    public Client client;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -25,6 +27,10 @@ public class EndScreenController implements Initializable {
 
     public void exit(){
         ((Stage)root.getScene().getWindow()).close();
+    }
+
+    public void setClient(Client theClient){
+        this.client = theClient;
     }
 
 

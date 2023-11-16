@@ -32,6 +32,7 @@ public class CategoryController implements Initializable {
     @FXML
     public VBox root;
     private String CategoryChose;
+    public Client client;
     void handleEvent(){
     }
     @Override
@@ -76,5 +77,8 @@ public class CategoryController implements Initializable {
 
     }
 
+    public void setClient(Client theClient){
+        this.client = theClient;
+    }
 
 }

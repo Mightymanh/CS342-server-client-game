@@ -26,6 +26,8 @@ public class ScreenController implements Initializable {
     @FXML
     public Button nextButton;
 
+    public Client client;
+
     @FXML
     public VBox root;
     void handleEvent(){
@@ -68,7 +70,9 @@ public class ScreenController implements Initializable {
 
 
 
-
+    public void setClient(Client theClient){
+        this.client = theClient;
+    }
 
 
 }
