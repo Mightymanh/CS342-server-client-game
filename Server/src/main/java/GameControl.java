@@ -3,28 +3,28 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class GameControl {
-	public HashMap<String, ArrayList<String>> WordBank;
+	static public HashMap<String, ArrayList<String>> WordBank;
 	
 	// round variable
 	public String word;
 	public char[] lettersInWord;
 	public int numLetter;
+	public int numLetterRemain;
 	public String category;
 	public int round;
 	public char guessLetter;
 	public int guessRemain;
-	public int roundStatus;
+	public int roundStatus; // -2 means game is not started, -1 means lost, 0 means running, 1 means win
 	
 	// game variable
 	public HashMap<String, ArrayList<String>> UsedList;
-	public int numWin;
-	public int numLost;
 	public int losingStreak;
-	public int[] categoryStatus; 
+	public HashMap<String, Integer> categoryStatus; 
 	public int gameStatus; // -2 means game is not started, -1 means lost, 0 means running, 1 means win
 	
 	// prepare word bank
 	private void prepareWordBank() {
+		if (WordBank != null) return; // if WordBank is already prepared by server then no need to create new object again
 		WordBank = new HashMap<>();
 		ArrayList<String> animalList = new ArrayList<>();
 		ArrayList<String> weatherList = new ArrayList<>();
@@ -47,13 +47,8 @@ public class GameControl {
 	
 	// prepare usedWord list
 	private void initUsedList() {
-		if (UsedList == null) {
-			UsedList = new HashMap<>();
-		}
-		else {
-			UsedList.clear();
-		}
-		
+		UsedList = new HashMap<>();
+
 		for (String key : WordBank.keySet()) {
 			UsedList.put(key, new ArrayList<String>());
 		}
@@ -66,14 +61,16 @@ public class GameControl {
 	// reset the game
 	public void resetGame() {
 		initUsedList();
-		numWin = 0;
-		numLost = 0;
 		round = 0;
 		guessRemain = 0;
 		losingStreak = 0;
-		categoryStatus = new int[3];
 		gameStatus = -2;
 		roundStatus = -2;
+		
+		categoryStatus = new HashMap<>();
+		for (String key : WordBank.keySet()) {
+			categoryStatus.put(key, 0);
+		}	
 	}
 	
 	// initialize the current round
@@ -86,13 +83,13 @@ public class GameControl {
 	// get random word correspond to client's chosen category in WordBank
 	public void getWord() {
 		ArrayList<String> wordList = WordBank.get(category);
-		//System.out.println(wordList.toString());
 		int length = wordList.size();
 		Random rand = new Random();
 		
+		// pick a random word from the wordList that is not used
 		while(true) {
 			int randomIndex = rand.nextInt(length);
-			word = wordList.get(randomIndex); // pick a random word
+			word = wordList.get(randomIndex); // get random index
 			
 			if (!UsedList.get(category).contains(word)) {
 				UsedList.get(category).add(word); // add word to UsedList if it is not chosen before
@@ -100,24 +97,68 @@ public class GameControl {
 			}
 		} 
 		
+		// set variables important for client and server communication
 		numLetter = word.length();
+		numLetterRemain = numLetter;
 		lettersInWord = word.toCharArray();
 	}
 	
 	// check client's guess letter in a word
 	public ArrayList<Integer> checkGuess() {
 		ArrayList<Integer> position = new ArrayList<>();
-		int length = lettersInWord.length;
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < numLetter; i++) {
 			if (lettersInWord[i] == guessLetter) {
 				// cross that letter from the list
 				lettersInWord[i] = '_';
 				
 				// add index of that letter in the list
 				position.add(i);
+				
+				// decrement numLetterRemain
+				numLetterRemain--;
 			}
 		}
 		
 		return position;
+	}
+
+	// update gameStatus variable as necessary when a round ends
+	public void postRoundUpdate() {
+		
+		if (roundStatus == -1) {// if client ended up losing the round
+			losingStreak++;
+			
+			// check if client lost the game
+			if (checkLosingGame()) {
+				gameStatus = -1;
+			}
+		}
+		else { // if client ended wining the round
+			losingStreak = 0;
+			categoryStatus.replace(category, 1);
+			
+			if (checkWinningGame()) {
+				gameStatus = 1;
+			}
+		}
+	}
+	
+	// check whether client loses the game
+	private boolean checkLosingGame() {
+		ArrayList<String> UsedWordInCategory = UsedList.get(category);
+		if (losingStreak == 3 || UsedWordInCategory.size() == 3) {
+			return true;
+		}
+		return false;
+	}
+	
+	// check whether client wins the game
+	private boolean checkWinningGame() {
+		for (String cat : categoryStatus.keySet()) {
+			if (categoryStatus.get(cat) == 0) 
+				return false;
+		}
+		
+		return true;
 	}
 }

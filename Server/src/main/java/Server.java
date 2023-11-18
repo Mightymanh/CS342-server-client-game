@@ -82,18 +82,26 @@ public class Server {
 			
 			// doing one game TODO: DO MULTIPLE GAMES
 			try {
-				initGameDetail();
-				freshStartGame();
-				do {
-					startRound();
-					getClientCategory();
-					gc.getWord();
-					sendNumLetter();
-					while (gc.roundStatus == 0) {
-						getClientGuess();
-						respondClient();
-					}	
-				} while (gc.gameStatus == 0);
+				while (true) {
+					initGameDetail(); 
+					freshStartGame();
+					do {
+						startRound();
+						getClientCategory();
+						gc.getWord();
+						sendNumLetter();
+						while (gc.roundStatus == 0) {
+							getClientGuess();
+							respondClient();
+						}
+						gc.postRoundUpdate();
+					} while (gc.gameStatus == 0);
+					
+					// when game ends, send to client so they know whether game lost or game won
+					sendGameOutCome();
+					
+					break; //we run only 1 game TEMPORARILY
+				}
 			}
 			catch (Exception e) {
 				callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
@@ -113,45 +121,42 @@ public class Server {
 		// RECEIVE client signal to start game, initialize all game component
 		public void freshStartGame() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at freshStartGame for client #" + count);} // TESTING
-			while (true) {
-				message = (GameDetail)in.readObject();
-				if (message.gameStatus == 0) { // if client says starts game (gameStatus = 0) then server starts game
-					callback.accept("Client #" + count + " start game");
-					gc.resetGame(); // zero game components
-					gc.gameStatus = 0; // signal that game is starting
-					break;
-				}
-				else {
-					System.out.println("Client #" + count + " not start game");
-				}
+
+			// receive start game signal
+			message = (GameDetail)in.readObject();
+			if (message.gameStatus == 0) { // if client says starts game (gameStatus = 0) then server starts game
+				callback.accept("Client #" + count + " start game");
+				gc.resetGame(); // zero game components
+				gc.gameStatus = 0; // signal that game is starting
+			}
+			else {
+				System.out.println("Client #" + count + " not start game");
 			}
 		}
 		
 		// RECEIVE signal to start round
 		public void startRound() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at startRound for client #" + count);} // TESTING
-			while (true) {
-				message = (GameDetail)in.readObject();
-				if (message.roundStatus == 0) { // if client says starts round (roundStatus = 0) then server starts round
-					callback.accept("Client #" + count + " start round");
-					gc.startRound();
-					break;
-				}
-				else {
-					System.out.println("Client #" + count + " not start round");
-				}
+			
+			// receive start round signal
+			message = (GameDetail)in.readObject();
+			if (message.roundStatus == 0) { // if client says starts round (roundStatus = 0) then server starts round
+				callback.accept("Client #" + count + " start round");
+				gc.startRound();
+			}
+			else {
+				System.out.println("Client #" + count + " not start round");
 			}
 		}
 		
 		// RECEIVE the client's category
 		public void getClientCategory() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at getClientCategory for client #" + count);}
-			while (true) {
-				message = (GameDetail)in.readObject();
-				gc.category = message.category;
-				callback.accept("Get client #" + count + " category: " + gc.category);
-				break;
-			}
+
+			// receive category
+			message = (GameDetail)in.readObject();
+			gc.category = message.category;
+			callback.accept("Get client #" + count + " category: " + gc.category);
 		}
 		
 		// SEND the number of letter of chosen word to client
@@ -164,12 +169,11 @@ public class Server {
 		// RECEIVE the client's guess letter
 		public void getClientGuess() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at getClientGuess for client #" + count);}
-			while (true) {
-				message = (GameDetail)in.readObject();
-				gc.guessLetter = message.guessLetter;
-				callback.accept("Get client #" + count + " guess letter: " + gc.guessLetter);
-				break;
-			}
+
+			// receive guess letter
+			message = (GameDetail)in.readObject();
+			gc.guessLetter = message.guessLetter;
+			callback.accept("Get client #" + count + " guess letter: " + gc.guessLetter);
 		}
 		
 		
@@ -178,14 +182,57 @@ public class Server {
 			// check the guess letter
 			ArrayList<Integer> position = gc.checkGuess();
 			
-			if (position.size() == 0) { // if client guess incorrectly then decrement guessRemaining
+			if (position.size() == 0) { // if client guess has guess the letter incorrectly
 				gc.guessRemain--;
+				if (gc.guessRemain == 0) { // if client has no guess left then client loses the round
+					gc.roundStatus = -1;
+					sendRoundLost(position);
+				}
+				else { // case when client still survive
+					sendRoundContinue(position);
+				}
 			}
-			else if (position.size() == gc.numLetter) { // if client guess all the letter in the word then the client wins
-				gc.gameStatus = 1;
+			else { // if the client guesses the letter correctly
+				if (gc.numLetterRemain == 0) { // if client guess all the letter in the word then the client wins the round
+					gc.roundStatus = 1;
+					sendRoundWin(position);
+				} 
+				else { // client needs to guess more letter to finish
+					sendRoundContinue(position);
+				}
+			}
+		}
+		
+		// SEND game outcome
+		public void sendGameOutCome() throws IOException {
+			if (gc.gameStatus == 1) {
+				callback.accept("Client #" + count + " wins");
+			}
+			else {
+				callback.accept("Client #" + count + "loses");
 			}
 			
-			// send the position that guess letter is in the word
+			message.gameStatus = gc.gameStatus;
+			out.writeObject(message);
+		}
+		
+		
+		// helper functions
+		private void sendRoundWin(ArrayList<Integer> position) throws IOException {
+			message.position = position;
+			message.guessRemain = gc.guessRemain;
+			message.roundStatus = gc.roundStatus;
+			out.writeObject(message);
+		}
+		
+		private void sendRoundLost(ArrayList<Integer> position) throws IOException {
+			message.position = position;
+			message.guessRemain = gc.guessRemain;
+			message.roundStatus = gc.roundStatus;
+			out.writeObject(message);
+		}
+		
+		private void sendRoundContinue(ArrayList<Integer> position) throws IOException {
 			message.position = position;
 			message.guessRemain = gc.guessRemain;
 			out.writeObject(message);
