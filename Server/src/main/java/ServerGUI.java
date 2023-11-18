@@ -2,13 +2,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
 public class ServerGUI extends Application {
 
+	static Server server;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		launch(args);
 	}
 
@@ -18,12 +21,14 @@ public class ServerGUI extends Application {
 		// TODO Auto-generated method stub
 		primaryStage.setTitle("Server GUI");
 		
-		Parent root = FXMLLoader.load(getClass().getResource("FXML/startScene.fxml"));
+		// loading resources
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/startScene.fxml"));
+		BorderPane root = loader.load();
 		
 		// initialize scene
 		Scene scene = new Scene(root, 500, 400);
 		//scene.getStylesheets().add("/styles/style.css");
-				
+
 		// show scene
 		primaryStage.setScene(scene);
 		primaryStage.show();

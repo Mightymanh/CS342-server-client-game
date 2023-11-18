@@ -15,6 +15,8 @@ public class GameDetail implements Serializable {
     public int wordLength;
 
     public int roundWins;
+    
+    public int roundStatus;
 
     public int gameStatus;
 

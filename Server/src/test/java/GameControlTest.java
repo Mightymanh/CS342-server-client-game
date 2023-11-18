@@ -20,9 +20,7 @@ class GameControlTest {
 	
 	@BeforeEach
 	void setup() {
-		server = new Server(null);
 		gc = new GameControl();
-		gc.resetGame();
 	}
 	
 	// check if the input list contains unique elements
@@ -34,9 +32,9 @@ class GameControlTest {
 	// initializeUsedWord
 	@Test
 	void testInitializeUsedWord1() {		
-		for (String category : gc.usedWord.keySet()) {
-			assertTrue(server.WordBank.containsKey(category), "initializedUsedWord: usedWord not contains correct keys");
-			assertEquals(0, gc.usedWord.get(category).size(), "initialziedUsedWord: list corresponding to category is not empty");
+		for (String category : gc.UsedList.keySet()) {
+			assertTrue(gc.WordBank.containsKey(category), "initializedUsedWord: usedWord not contains correct keys");
+			assertEquals(0, gc.UsedList.get(category).size(), "initialziedUsedWord: list corresponding to category is not empty");
 			
 		}
 	}
@@ -45,12 +43,12 @@ class GameControlTest {
 	void testInitalizeUsedWord2() {
 		gc.category = "animal";
 		gc.getWord();
-		assertTrue(!gc.usedWord.get("animal").isEmpty());
+		assertTrue(!gc.UsedList.get("animal").isEmpty());
 		
 		gc.resetGame();
-		for (String category : gc.usedWord.keySet()) {
-			assertTrue(server.WordBank.containsKey(category), "initializedUsedWord: usedWord not contains correct keys");
-			assertEquals(0, gc.usedWord.get(category).size(), "initialziedUsedWord: list corresponding to category is not empty");
+		for (String category : gc.UsedList.keySet()) {
+			assertTrue(gc.WordBank.containsKey(category), "initializedUsedWord: usedWord not contains correct keys");
+			assertEquals(0, gc.UsedList.get(category).size(), "initialziedUsedWord: list corresponding to category is not empty");
 		}
 	}
 	
@@ -61,26 +59,26 @@ class GameControlTest {
 		gc.getWord();
 		ArrayList<String> expected = new ArrayList<>();
 		expected.add(gc.word);
-		assertTrue(Server.WordBank.get("animal").contains(gc.word));
-		assertTrue(gc.usedWord.get("animal").equals(expected));
-		assertTrue(checkUnique(gc.usedWord.get("animal")));
+		assertTrue(gc.WordBank.get("animal").contains(gc.word));
+		assertTrue(gc.UsedList.get("animal").equals(expected));
+		assertTrue(checkUnique(gc.UsedList.get("animal")));
 		
 		// second round
 		gc.category = "animal";
 		gc.getWord();
 		expected.add(gc.word);
-		assertTrue(Server.WordBank.get("animal").contains(gc.word));
-		assertTrue(gc.usedWord.get("animal").equals(expected));
-		assertTrue(checkUnique(gc.usedWord.get("animal")));
+		assertTrue(gc.WordBank.get("animal").contains(gc.word));
+		assertTrue(gc.UsedList.get("animal").equals(expected));
+		assertTrue(checkUnique(gc.UsedList.get("animal")));
 
 		
 		// third round
 		gc.category = "animal";
 		gc.getWord();
 		expected.add(gc.word);
-		assertTrue(Server.WordBank.get("animal").contains(gc.word)); 
-		assertTrue(gc.usedWord.get("animal").equals(expected));
-		assertTrue(checkUnique(gc.usedWord.get("animal")));
+		assertTrue(gc.WordBank.get("animal").contains(gc.word)); 
+		assertTrue(gc.UsedList.get("animal").equals(expected));
+		assertTrue(checkUnique(gc.UsedList.get("animal")));
 	}
 	
 	@Test
@@ -93,28 +91,28 @@ class GameControlTest {
 		gc.category = "animal";
 		gc.getWord();
 		expectedAnimalList.add(gc.word);
-		assertTrue(Server.WordBank.get("animal").contains(gc.word));
+		assertTrue(gc.WordBank.get("animal").contains(gc.word));
 		
 		
 		// second round
 		gc.category = "animal";
 		gc.getWord();
 		expectedAnimalList.add(gc.word);
-		assertTrue(Server.WordBank.get("animal").contains(gc.word));
+		assertTrue(gc.WordBank.get("animal").contains(gc.word));
 
 		// third round
 		gc.category = "tools";
 		gc.getWord();
 		expectedToolList.add(gc.word);
-		assertTrue(Server.WordBank.get("tools").contains(gc.word)); 
+		assertTrue(gc.WordBank.get("tools").contains(gc.word)); 
 		
 		// check overall
-		assertTrue(gc.usedWord.get("animal").equals(expectedAnimalList));
-		assertTrue(gc.usedWord.get("tools").equals(expectedToolList));
-		assertTrue(gc.usedWord.get("weather").equals(expectedWeatherList));
-		assertTrue(checkUnique(gc.usedWord.get("animal")));
-		assertTrue(checkUnique(gc.usedWord.get("weather")));
-		assertTrue(checkUnique(gc.usedWord.get("tools")));
+		assertTrue(gc.UsedList.get("animal").equals(expectedAnimalList));
+		assertTrue(gc.UsedList.get("tools").equals(expectedToolList));
+		assertTrue(gc.UsedList.get("weather").equals(expectedWeatherList));
+		assertTrue(checkUnique(gc.UsedList.get("animal")));
+		assertTrue(checkUnique(gc.UsedList.get("weather")));
+		assertTrue(checkUnique(gc.UsedList.get("tools")));
 	}
 	
 	@Test

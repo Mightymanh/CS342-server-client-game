@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class Server {
-	static HashMap<String, ArrayList<String>> WordBank;
 	int port;
 	int count;
 	ArrayList<ClientThread> clientThreadList;
@@ -17,34 +16,16 @@ public class Server {
 	Consumer<Serializable> callback;
 	GameDetail message;
 	
-	// prepare server's word bank
-	private void prepareServerWordBank() {
-		ArrayList<String> animalList = new ArrayList<>();
-		ArrayList<String> weatherList = new ArrayList<>();
-		ArrayList<String> toolList = new ArrayList<>();
-		animalList.add("tiger");
-		animalList.add("fish");
-		animalList.add("ant");
-		animalList.add("bee");
-		weatherList.add("snow");
-		weatherList.add("gale");
-		weatherList.add("autumn");
-		weatherList.add("hot");
-		toolList.add("drill");
-		toolList.add("tape");
-		toolList.add("manual");
-		WordBank.put("animal", animalList);
-		WordBank.put("weather", weatherList);
-		WordBank.put("tools", toolList);
-	}
-	
-	public Server(Consumer<Serializable> call) {
-		WordBank = new HashMap<>();
-		prepareServerWordBank();
+	public Server(int port, Consumer<Serializable> call) {
+		this.port = port;
+		this.count = 0;
 		
 		// start listening to a port and connect to clients
 		listenT = new ListenThread();
 		listenT.start();
+		
+		//
+		clientThreadList = new ArrayList<ClientThread>();
 		
 		// define callback function as call
 		callback = call;
@@ -53,8 +34,9 @@ public class Server {
 	public class ListenThread extends Thread {
 		public void run() {
 			try(ServerSocket serverS = new ServerSocket(port);){
-				System.out.println("Server is waiting for a client!");
-
+				//System.out.println("Server is waiting for a client on port: " + port);
+				callback.accept("Server is waiting for a client on port: " + port);
+				
 				while(true) {
 					ClientThread clientT = new ClientThread(serverS.accept(), count);
 					callback.accept("Client has connected to server: client #" + count);
@@ -64,7 +46,8 @@ public class Server {
 				}
 			}
 			catch(Exception e) {
-				callback.accept("Server socket did not launch");
+				// e.printStackTrace();
+				callback.accept("Server socket did not launch.");
 			}
 		}
 	}
@@ -93,29 +76,69 @@ public class Server {
 				System.out.println("Streams not open");
 			}
 			
-			// while loop that starts the game
+			// doing one game TODO: DO MULTIPLE GAMES
+			initGameDetail();
 			freshStartGame();
-			while (gc.round <= 3) {
+			do {
 				startRound();
 				getClientCategory();
 				gc.getWord();
-				
-				// when client's category is set,
-				while (gc.gameStatus == 0) {
+				sendNumLetter();
+				while (gc.roundStatus == 0) {
 					getClientGuess();
-					try {
-						respondClient();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					respondClient();
+				}	
+			} while (gc.gameStatus == 0);
+			
+		}
+		
+		// send signal to client that server is waiting for client to start game
+		public void initGameDetail() {
+			message = new GameDetail();
+			message.gameStatus = -2;
+			try {
+				out.writeObject(message);
+			} 
+			catch(Exception e) {
+				System.out.println("Error in initGameDetail for client #" + count);
+			}
+		}
+		
+		// receive client signal to start game, initialize all game component
+		public void freshStartGame() {
+			while (true) {
+				try {
+					message = (GameDetail)in.readObject();
+					if (message.gameStatus == 0) { // if client says starts game (gameStatus = 0) then server starts game
+						callback.accept("Client #" + count + " start game");
+						gc.resetGame(); // zero game components
+						break;
+					}
+					else {
+						System.out.println("Client #" + count + " not start game");
 					}
 				}
-				endRound(gc.gameStatus);
+				catch (Exception e){
+					System.out.println("Error in freshStartGame for client #" + count + ". Terminating client");
+					clientThreadList.remove(this);
+					break;
+				}
 			}
 		}
 		
 		public void startRound() {
 			gc.startRound();
+			callback.accept("Client #" + count + " are about to enter round " + gc.round);
+			
+			// send message to client
+			message = new GameDetail();
+			message.roundStatus = 0;
+			try {
+				out.writeObject(message);
+			}
+			catch (Exception e) {
+				System.out.println("Error in startRound for client #" + count);		
+			}
 		}
 		
 		// get the client's category
@@ -126,7 +149,17 @@ public class Server {
 				callback.accept("Get client #" + count + " category: " + gc.category);
 			} catch (Exception e) {
 				callback.accept("Fail to get category from client #" + count);
-				callback.accept("error: " + e.toString());
+			}
+		}
+		
+		// send the number of letter of chosen word to client
+		public void sendNumLetter() {
+			message.wordLength = gc.numLetter;
+			try {
+				out.writeObject(message);
+			}
+			catch (Exception e) {
+				System.out.println("Error in sendNumLetter for client #" + count);
 			}
 		}
 		
@@ -138,12 +171,12 @@ public class Server {
 				callback.accept("Get client #" + count + " guess letter: " + gc.guessLetter);
 			} catch (Exception e) {
 				callback.accept("Fail to get guess letter from client #" + count);
-				callback.accept("error: " + e.toString());
 			}
 		}
 		
+		
 		// check client's guess letter and send a respond
-		public void respondClient() throws IOException {
+		public void respondClient() {
 			// check the guess letter
 			ArrayList<Integer> position = gc.checkGuess();
 			
@@ -155,16 +188,14 @@ public class Server {
 			}
 			
 			// send the position that guess letter is in the word
-			message.position = position;
-			message.guessRemain = gc.guessRemain;
-			out.writeObject(message);
-		}
-		
-		public void endRound(int gameStatus) {
-		}
-		
-		public void freshStartGame() {
-			
+			try {
+				message.position = position;
+				message.guessRemain = gc.guessRemain;
+				out.writeObject(message);
+			}
+			catch (Exception e) {
+				System.out.println("Error in responding to client guess for client #" + count);
+			}
 		}
 	}
 }
