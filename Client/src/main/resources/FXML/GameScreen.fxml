@@ -37,40 +37,10 @@
         Pick a letter and hit Enter
     </Label>
 
-    <VBox>
-        <HBox>
-           <Button onAction="#uploadLetter">a</Button>
-            <Button onAction="#uploadLetter">b</Button>
-            <Button onAction="#uploadLetter">c</Button>
-            <Button onAction="#uploadLetter">d</Button>
-            <Button onAction="#uploadLetter">e</Button>
-            <Button onAction="#uploadLetter">f</Button>
-            <Button onAction="#uploadLetter">g</Button>
-            <Button onAction="#uploadLetter">h</Button>
-            <Button onAction="#uploadLetter">i</Button>
-        </HBox>
-        <HBox>
-            <Button onAction="#uploadLetter">j</Button>
-            <Button onAction="#uploadLetter">k</Button>
-            <Button onAction="#uploadLetter">l</Button>
-            <Button onAction="#uploadLetter">m</Button>
-            <Button onAction="#uploadLetter">n</Button>
-            <Button onAction="#uploadLetter">o</Button>
-            <Button onAction="#uploadLetter">p</Button>
-            <Button onAction="#uploadLetter">q</Button>
-            <Button onAction="#uploadLetter">r</Button>
-        </HBox>
-        <HBox>
-            <Button onAction="#uploadLetter">s</Button>
-            <Button onAction="#uploadLetter">t</Button>
-            <Button onAction="#uploadLetter">u</Button>
-            <Button onAction="#uploadLetter">v</Button>
-            <Button onAction="#uploadLetter">w</Button>
-            <Button onAction="#uploadLetter">x</Button>
-            <Button onAction="#uploadLetter">y</Button>
-            <Button onAction="#uploadLetter">z</Button>
-        </HBox>
-    </VBox>
+
+    <TextField fx:id="letterField" onAction="#uploadLetter">
+
+    </TextField>
 
     <HBox fx:id="ButtonField">
         <Button fx:id="enterButton">Enter</Button>

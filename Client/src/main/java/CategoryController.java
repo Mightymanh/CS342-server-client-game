@@ -56,6 +56,16 @@ public class CategoryController implements Initializable {
             return;
         }
         title.setText("pressed");
+
+        client.gameInfo.category = CategoryChose;
+        if(!client.sentObject()) {
+            return;
+        }
+        if(!client.receiveObject()) {
+            return;
+        }
+
+        client.initWord();
         try{
             screenScene();
         } catch (Exception error ){
@@ -72,10 +82,11 @@ public class CategoryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/GameScreen.fxml"));
         Parent screenRoot = fxmlLoader.load();
         ScreenController controller = fxmlLoader.<ScreenController>getController();
-
+        controller.setClient(client);
         root.getScene().setRoot(screenRoot);
 
     }
+
 
     public void setClient(Client theClient){
         this.client = theClient;
