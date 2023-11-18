@@ -55,12 +55,16 @@ public class CategoryController implements Initializable {
             title.setText("Must Choose a category to continue");
             return;
         }
-        title.setText("pressed");
+        title.setText(CategoryChose);
 
-        client.gameInfo.category = CategoryChose;
+        this.client.gameInfo.category = CategoryChose;
         if(!client.sentObject()) {
+
+            System.out.println("error");
             return;
         }
+
+        System.out.println(this.client.gameInfo.category);
         if(!client.receiveObject()) {
             return;
         }
@@ -88,8 +92,23 @@ public class CategoryController implements Initializable {
     }
 
 
+    public void startRound(){
+        this.client.gameInfo.roundStatus = 0;
+        this.client.sentObject();
+    }
+
     public void setClient(Client theClient){
         this.client = theClient;
+        this.client.receiveObject();
+        if(client.gameInfo.gameStatus == -2) {
+            client.gameInfo.gameStatus = 0;
+        }
+
+        this.client.sentObject();
+
+        startRound();
+
+
     }
 
 }

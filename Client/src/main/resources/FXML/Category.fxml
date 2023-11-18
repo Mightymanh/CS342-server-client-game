@@ -21,9 +21,9 @@
     <Label fx:id="title">Pick your Category</Label>
 
     <HBox fx:id = "categoryBox">
-        <Button onAction="#displayCategory">Animal</Button>
-        <Button onAction="#displayCategory">Dog</Button>
-        <Button onAction="#displayCategory">Cat</Button>
+        <Button onAction="#displayCategory">animal</Button>
+        <Button onAction="#displayCategory">weather</Button>
+        <Button onAction="#displayCategory">tools</Button>
     </HBox>
 
 
