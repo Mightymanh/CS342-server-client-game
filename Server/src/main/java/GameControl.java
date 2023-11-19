@@ -16,13 +16,13 @@ public class GameControl {
 	public int round;
 	public char guessLetter;
 	public int guessRemain;
-	public int roundStatus; // -2 means game is not started, -1 means lost, 0 means running, 1 means win
+	public int roundStatus; // -2 means round is not started, -1 means lost, 1 means win, 2 means running
 	
 	// game variable
 	public HashMap<String, ArrayList<String>> UsedList;
 	public int losingStreak;
 	public HashMap<String, Integer> categoryStatus; 
-	public int gameStatus; // -2 means game is not started, -1 means lost, 0 means running, 1 means win
+	public int gameStatus; // -2 means game is not started, -1 means lost, 1 means win, 2 means running
 	
 	// prepare word bank
 	private void prepareWordBank() {
@@ -95,14 +95,9 @@ public class GameControl {
 		
 		// pick a random word from the wordList that is not used
 		while(true) {
-		//	System.out.println(length);
-		//	int randomIndex = rand.nextInt(length);
-			word = wordList.get(0); // get random index
-			if(UsedList == null) {
-				System.out.println("Cannot find category");
-			} else {
-				System.out.println("found category");
-			}
+			int randomIndex = rand.nextInt(length);
+			word = wordList.get(randomIndex); // get random index
+			
 			if (!UsedList.get(category).contains(word)) {
 				UsedList.get(category).add(word); // add word to UsedList if it is not chosen before
 				break;

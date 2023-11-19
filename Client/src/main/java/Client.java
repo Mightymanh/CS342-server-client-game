@@ -60,8 +60,6 @@ public class Client {
         try{
             this.out.reset();
             this.out.writeObject(this.gameInfo);
-            System.out.println(this.gameInfo.gameStatus);
-            System.out.println(this.gameInfo.category);
             return true;
         } catch (Exception e ) {
             e.printStackTrace();

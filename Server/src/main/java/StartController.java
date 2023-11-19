@@ -53,7 +53,7 @@ public class StartController implements Initializable {
 		Consumer<Serializable> call = (data) -> {
 			Platform.runLater(() -> {
 				list.getItems().add(data.toString());
-				System.out.println(data.toString());
+				//System.out.println(data.toString());
 			});	
 		};
 				
