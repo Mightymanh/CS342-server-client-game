@@ -1,9 +1,11 @@
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -11,6 +13,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 
 public class LogController implements Initializable {
+
+	private static final String ArrayList = null;
 
 	// components for log scene
 	@FXML
@@ -34,13 +38,19 @@ public class LogController implements Initializable {
 	}
 	
 	// actionEvent for exitApp
-	public void ExitApp(ActionEvent e) {
+	public void exitApp(ActionEvent e) {
 		Platform.exit();
 	}
 	
 	// actionEvent for closeServer
-//	public void closeServer(ActionEvent e) {
-//		ServerGUI.server.listenT.close
-//	}
+	public void closeServer(ActionEvent e) throws IOException {
+		// shut down server
+		ServerGUI.server.shutdownServer();
+		
+		// back to start scene
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/startScene.fxml"));
+		BorderPane startRoot = loader.load();
+		logRoot.getScene().setRoot(startRoot);
+	}
 
 }

@@ -19,6 +19,22 @@ public class Server {
 	// debug variable
 	boolean DEBUG = true;
 	
+	// close all sockets related to Server and clear clientThreadList
+	public void shutdownServer() {
+		try {
+			listenT.serverS.close();
+			int length = clientThreadList.size();
+			for (int i = 0; i < length; i++) {
+				ClientThread cl = clientThreadList.get(i);
+				cl.shutdownThread();
+			}
+			System.out.println("Shut down server with " + length + " running threads");
+		}
+		catch (Exception ex) {
+			System.out.println("Cannot close server for some reason");
+		}
+	}
+	
 	public Server(int port, Consumer<Serializable> call) {
 		this.port = port;
 		this.count = 0;
@@ -35,9 +51,13 @@ public class Server {
 	}
 	
 	public class ListenThread extends Thread {
+		
+		ServerSocket serverS;
+		
 		public void run() {
-			try(ServerSocket serverS = new ServerSocket(port);){
-				//System.out.println("Server is waiting for a client on port: " + port);
+			try {
+				
+				serverS = new ServerSocket(port);
 				callback.accept("Server is waiting for a client on port: " + port);
 				
 				while(true) {
@@ -49,7 +69,6 @@ public class Server {
 				}
 			}
 			catch(Exception e) {
-				// e.printStackTrace();
 				callback.accept("Server socket did not launch.");
 			}
 		}
@@ -68,6 +87,19 @@ public class Server {
 			gc = new GameControl();
 		}
 		
+		// shut down client thread socket and remove thread from list
+		public void shutdownThread() {
+			try {
+				this.connection.close();
+			} 
+			catch (IOException e1) {
+				System.out.println("Cannot close client for some reason");
+			}
+			
+			clientThreadList.remove(this);
+		}
+		
+		// main
 		public void run() {
 			// initialize input and output stream
 			try {
@@ -104,9 +136,7 @@ public class Server {
 			}
 			catch (Exception e) {
 				callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
-				//e.printStackTrace();
-				clientThreadList.remove(this);
-
+				shutdownThread();
 			}
 			
 		}

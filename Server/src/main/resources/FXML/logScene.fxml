@@ -35,8 +35,8 @@
          <menus>
             <Menu fx:id="menu" mnemonicParsing="false" text="Option">
               <items>
-                <MenuItem fx:id="exitApp" mnemonicParsing="false" text="exit app" onAction="#ExitApp" />
-                <MenuItem fx:id="closeServer" mnemonicParsing="false" text="close server" />
+                <MenuItem fx:id="exitApp" mnemonicParsing="false" text="exit app" onAction="#exitApp" />
+                <MenuItem fx:id="closeServer" mnemonicParsing="false" text="close server" onAction="#closeServer" />
               </items>
             </Menu>
          </menus>
