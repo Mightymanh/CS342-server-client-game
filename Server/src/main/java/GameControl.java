@@ -1,3 +1,5 @@
+import jdk.jfr.Category;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -56,6 +58,11 @@ public class GameControl {
 	
 	public GameControl() {
 		prepareWordBank();
+		initUsedList();
+		categoryStatus = new HashMap<>();
+		for (String key : WordBank.keySet()) {
+			categoryStatus.put(key, 0);
+		}
 	}
 	
 	// reset the game
@@ -88,9 +95,14 @@ public class GameControl {
 		
 		// pick a random word from the wordList that is not used
 		while(true) {
-			int randomIndex = rand.nextInt(length);
-			word = wordList.get(randomIndex); // get random index
-			
+		//	System.out.println(length);
+		//	int randomIndex = rand.nextInt(length);
+			word = wordList.get(0); // get random index
+			if(UsedList == null) {
+				System.out.println("Cannot find category");
+			} else {
+				System.out.println("found category");
+			}
 			if (!UsedList.get(category).contains(word)) {
 				UsedList.get(category).add(word); // add word to UsedList if it is not chosen before
 				break;
@@ -135,6 +147,10 @@ public class GameControl {
 		}
 		else { // if client ended wining the round
 			losingStreak = 0;
+			if(categoryStatus == null) {
+				System.out.println("cate status is empty");
+
+			}
 			categoryStatus.replace(category, 1);
 			
 			if (checkWinningGame()) {

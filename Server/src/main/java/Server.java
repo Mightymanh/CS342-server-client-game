@@ -89,6 +89,7 @@ public class Server {
 						startRound();
 						getClientCategory();
 						gc.getWord();
+
 						sendNumLetter();
 						while (gc.roundStatus == 0) {
 							getClientGuess();
@@ -104,8 +105,10 @@ public class Server {
 				}
 			}
 			catch (Exception e) {
-				callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
+			//	callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
+				e.printStackTrace();
 				clientThreadList.remove(this);
+
 			}
 			
 		}
@@ -126,6 +129,7 @@ public class Server {
 			message = (GameDetail)in.readObject();
 			if (message.gameStatus == 0) { // if client says starts game (gameStatus = 0) then server starts game
 				callback.accept("Client #" + count + " start game");
+				callback.accept("Client gamestatus" + message.gameStatus + " start game");
 				gc.resetGame(); // zero game components
 				gc.gameStatus = 0; // signal that game is starting
 			}
@@ -139,9 +143,11 @@ public class Server {
 			if (DEBUG) {System.out.println("at startRound for client #" + count);} // TESTING
 			
 			// receive start round signal
+		//	out.writeObject(message);
 			message = (GameDetail)in.readObject();
 			if (message.roundStatus == 0) { // if client says starts round (roundStatus = 0) then server starts round
 				callback.accept("Client #" + count + " start round");
+				callback.accept("client round #" + message.roundStatus + " start round");
 				gc.startRound();
 			}
 			else {
@@ -153,8 +159,11 @@ public class Server {
 		public void getClientCategory() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at getClientCategory for client #" + count);}
 
+		//	out.writeObject(message);
 			// receive category
 			message = (GameDetail)in.readObject();
+
+		//	message = (GameDetail)in.readObject();
 			gc.category = message.category;
 			callback.accept("Get client #" + count + " category: " + gc.category);
 		}

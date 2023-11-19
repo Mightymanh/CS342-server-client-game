@@ -1,0 +1,13 @@
+
+#root {
+
+    -fx-alignment: CENTER;
+}
+
+#VBoxContainer {
+
+    -fx-pref-width: 700;
+    -fx-pref-height: 700;
+
+
+}

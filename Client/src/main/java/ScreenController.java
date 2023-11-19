@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -31,10 +32,11 @@ public class ScreenController implements Initializable {
     @FXML
     public TextField letterField;
     public Client client;
+    public Label attemptLabel;
 
     String curLetter;
 
-    Set<Character> alphaList;
+    HashMap<Character, Integer> alphaList;
 
     @FXML
     public VBox root;
@@ -47,32 +49,37 @@ public class ScreenController implements Initializable {
 
         handleEvent();
 
-        for(int i = 'a'; i <= 'z';i++) {
-            alphaList.add((char)i);
+        alphaList = new HashMap<>();
+
+        for(int i = 97; i <= 122;i++) {
+            char letter = (char)i;
+            //System.out.println(letter);
+                alphaList.put(letter, 1);
+
+
         }
 
-        for(Character i: alphaList) {
-            System.out.println(i);
-        }
+
 
 
     }
 
 
-    public void uploadLetter(ActionEvent e) {
+    public void uploadLetter() {
 
-        String curText = letterField.getText();
+        curLetter = letterField.getText();
 
-        if(curText.length() > 1 || !Character.isLetter(curText.charAt(0))) {
+        if(curLetter.length() > 1 || !Character.isLetter(curLetter.charAt(0))) {
 
             promptText.setText("Invalid Input");
             return;
         }
 
-        if (!alphaList.contains(curText.charAt(0))) {
+        if (alphaList.get(curLetter.charAt(0)) == 0) {
             promptText.setText("Letter already picked");
             return;
         }
+
 
 
 
@@ -89,16 +96,27 @@ public class ScreenController implements Initializable {
 
         client.receiveObject();
 
+        alphaList.replace(curLetter.charAt(0), 0);
         if(client.gameInfo.position != null && !client.gameInfo.position.isEmpty()) {
+            updateLetterResult("correct");
+
             client.updateWord(curLetter.charAt(0), client.gameInfo.position);
+
         } else if (client.gameInfo.guessRemain == 0){
                 System.out.println("Round over");
-
-
-    }
-
+    } else{
+            updateLetterResult("Incorrect");
+        }
+        
+    //    System.out.println("weweewe");
 
         curWord.setText(client.word);
+    }
+    
+    public void updateLetterResult(String result) {
+        promptText.setText(result);
+        attemptLabel.setText("Attempt Left: " + this.client.gameInfo.guessRemain);
+        
     }
 
     public void nextButton()  {
@@ -121,9 +139,14 @@ public class ScreenController implements Initializable {
 
 
 
+    public void displayWord(){
+        this.curWord.setText(this.client.word);
+    }
     public void setClient(Client theClient){
         this.client = theClient;
-
+        CategoryName.setText(this.client.gameInfo.category);
+        this.client.initWord();
+        displayWord();
 
     }
 

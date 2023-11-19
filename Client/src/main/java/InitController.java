@@ -3,10 +3,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +19,8 @@ import java.util.ResourceBundle;
 public class InitController implements Initializable {
 
 
-
+    public HBox titleContainer;
+    public VBox vboxContainer;
     @FXML
     Label title;
 
@@ -30,7 +34,7 @@ public class InitController implements Initializable {
     TextField portBox;
 
     @FXML
-    VBox root;
+    HBox root;
 
     public Client client;
     @Override
@@ -93,7 +97,9 @@ public class InitController implements Initializable {
         CategoryController controller = fxmlLoader.<CategoryController>getController();
         controller.setClient(client);
 
-        root.getScene().setRoot(Catroot);
+        Scene s1 = new Scene(Catroot, 700, 700);
+        s1.getStylesheets().add("/style/Category.css");
+        ((Stage)root.getScene().getWindow()).setScene(s1);
 
     }
 

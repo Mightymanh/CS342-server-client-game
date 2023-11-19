@@ -1,0 +1,28 @@
+
+
+
+#root{
+    -fx-alignment: CENTER;
+}
+#title {
+
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
+
+    -fx-font-size : 20;
+
+
+}
+#confirm {
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
+}
+#portBox {
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+
+}
+
+#vboxContainer {
+    -fx-spacing: 20;
+}

@@ -30,7 +30,8 @@ public class CategoryController implements Initializable {
     public MenuItem exit;
 
     @FXML
-    public VBox root;
+    public HBox root;
+    public VBox VBoxContainer;
     private String CategoryChose;
     public Client client;
     void handleEvent(){
@@ -57,18 +58,22 @@ public class CategoryController implements Initializable {
         }
         title.setText(CategoryChose);
 
+
+       // this.client.receiveObject();
         this.client.gameInfo.category = CategoryChose;
+
         if(!client.sentObject()) {
 
             System.out.println("error");
             return;
         }
 
-        System.out.println(this.client.gameInfo.category);
+
+    //    System.out.println(this.client.gameInfo.category);
         if(!client.receiveObject()) {
             return;
         }
-
+        System.out.println(client.gameInfo.wordLength);
         client.initWord();
         try{
             screenScene();
@@ -84,9 +89,12 @@ public class CategoryController implements Initializable {
     public void screenScene() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/GameScreen.fxml"));
+
         Parent screenRoot = fxmlLoader.load();
         ScreenController controller = fxmlLoader.<ScreenController>getController();
+      //  System.out.println("asdsadasd");
         controller.setClient(client);
+ //       System.out.println("ssdas");
         root.getScene().setRoot(screenRoot);
 
     }
@@ -94,6 +102,8 @@ public class CategoryController implements Initializable {
 
     public void startRound(){
         this.client.gameInfo.roundStatus = 0;
+
+
         this.client.sentObject();
     }
 
@@ -101,10 +111,13 @@ public class CategoryController implements Initializable {
         this.client = theClient;
         this.client.receiveObject();
         if(client.gameInfo.gameStatus == -2) {
-            client.gameInfo.gameStatus = 0;
+            client.gameInfo.gameStatus = 2;
         }
 
+
         this.client.sentObject();
+
+   //     this.client.receiveObject();
 
         startRound();
 

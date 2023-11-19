@@ -18,7 +18,6 @@ public class Client {
 
 
     public boolean connect(int port) {
-
         try{
             System.out.println("trying to connect");
             socket = new Socket("127.0.0.1",port);
@@ -36,6 +35,10 @@ public class Client {
 
 
     public void updateWord(char letter, ArrayList<Integer> pos){
+        if(pos== null || pos.size() == 0) {
+            System.out.println("no place");
+            return;
+        }
         char[] wordArr = word.toCharArray();
         for(int i : pos) {
             wordArr[i] = letter;
@@ -55,6 +58,7 @@ public class Client {
 
     public boolean sentObject(){
         try{
+            this.out.reset();
             this.out.writeObject(this.gameInfo);
             System.out.println(this.gameInfo.gameStatus);
             System.out.println(this.gameInfo.category);

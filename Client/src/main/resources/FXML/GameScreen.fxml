@@ -13,7 +13,7 @@
 
 
     <HBox>
-        <Label>
+        <Label fx:id="attemptLabel">
             Attempt: 6;
         </Label>
         <MenuBar>
@@ -38,12 +38,12 @@
     </Label>
 
 
-    <TextField fx:id="letterField" onAction="#uploadLetter">
+    <TextField fx:id="letterField" >
 
     </TextField>
 
     <HBox fx:id="ButtonField">
-        <Button fx:id="enterButton">Enter</Button>
+        <Button fx:id="enterButton" onAction="#uploadLetter">Enter</Button>
         <Button fx:id="nextButton" onAction="#nextButton">Next</Button>
     </HBox>
 

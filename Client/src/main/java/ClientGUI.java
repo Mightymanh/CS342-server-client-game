@@ -36,8 +36,8 @@ public class ClientGUI extends Application {
 
 		InitController controller = fxmlLoader.<InitController>getController();
 		controller.setClient(client);
-		Scene s1 = new Scene(root, 500,500);
-
+		Scene s1 = new Scene(root, 700,700);
+		s1.getStylesheets().add("/style/Init.css");
 		primaryStage.setScene(s1);
 		primaryStage.show();
 
