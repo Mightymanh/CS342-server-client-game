@@ -12,12 +12,6 @@
             prefHeight="700.0" prefWidth="700.0">
 
     <VBox fx:id="VBoxContainer">
-    <MenuBar >
-        <Menu fx:id="option" text="option">
-            <MenuItem fx:id = "restart" text = "restart"/>
-            <MenuItem fx:id = "exit" text="exit"/>
-        </Menu>
-    </MenuBar>
     <Label fx:id="title">Pick your Category</Label>
 
     <HBox fx:id = "categoryBox">

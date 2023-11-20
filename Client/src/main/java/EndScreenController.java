@@ -58,12 +58,10 @@ public class EndScreenController implements Initializable {
             System.out.println("failed to change scene");
             e.printStackTrace();
         }
-
-
     }
 
     public void exitButton() {
-        this.client.gameInfo.restart  = 0;
+        this.client.gameInfo.restart= -1;
         this.client.sentObject();
         exit();
     }

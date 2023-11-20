@@ -16,12 +16,7 @@
         <Label fx:id="attemptLabel">
             Attempt: 6;
         </Label>
-        <MenuBar>
-            <Menu fx:id="option" text="option">
-                <MenuItem fx:id="exit" text="exit"/>
-                <MenuItem fx:id="restart" text="restart"/>
-            </Menu>
-        </MenuBar>
+
     </HBox>
 
 

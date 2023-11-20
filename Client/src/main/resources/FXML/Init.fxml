@@ -13,10 +13,8 @@
     <VBox fx:id="vboxContainer">
 
         <Label fx:id="title"> Client Application </Label>
-
         <Label fx:id="prompt"> Port Number: </Label>
         <TextField fx:id="portBox" promptText="Enter your port number"> </TextField>
-
         <Button fx:id="confirm">Confirm</Button>
 
     </VBox>
