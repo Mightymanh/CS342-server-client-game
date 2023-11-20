@@ -2,6 +2,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -42,29 +43,22 @@ public class EndScreenController implements Initializable {
     }
 
 
-    public void restartButton() {
-        this.client.gameInfo.restart  = 1;
-
-        this.client.sentObject();
-        this.client.reset();
-
+    public void menuButton () {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
-            Parent cateRoot = fxmlLoader.load();
-            CategoryController controller = fxmlLoader.<CategoryController>getController();
-            controller.setClient(this.client, 1);
-            root.getScene().setRoot(cateRoot);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/GameMenu.fxml"));
+            Parent Catroot = fxmlLoader.load();
+            GameMenuController controller = fxmlLoader.<GameMenuController>getController();
+            controller.setClient(client);
+
+            Scene s1 = new Scene(Catroot, 700, 700);
+            //s1.getStylesheets().add("/style/GameMenu.css");
+            ((Stage)root.getScene().getWindow()).setScene(s1);
         } catch (Exception e) {
-            System.out.println("failed to change scene");
+            System.out.println("Failed to change scene");
             e.printStackTrace();
         }
     }
 
-    public void exitButton() {
-        this.client.gameInfo.restart= -1;
-        this.client.sentObject();
-        exit();
-    }
     public void setClient(Client theClient){
 
         this.client = theClient;

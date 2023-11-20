@@ -113,8 +113,7 @@ public class ScreenController implements Initializable {
             updateLetterResult("Incorrect");
         }
 
-        
-    //    System.out.println("weweewe");
+
 
         curWord.setText(client.word);
         if (client.gameInfo.roundStatus != 0){
@@ -174,7 +173,7 @@ public class ScreenController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
         Parent cateRoot = fxmlLoader.load();
         CategoryController controller = fxmlLoader.<CategoryController>getController();
-        controller.setClient(this.client, 0);
+        controller.setClient(this.client);
         root.getScene().setRoot(cateRoot);
     }
 

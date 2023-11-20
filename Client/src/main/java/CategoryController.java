@@ -95,9 +95,7 @@ public class CategoryController implements Initializable {
 
         Parent screenRoot = fxmlLoader.load();
         ScreenController controller = fxmlLoader.<ScreenController>getController();
-      //  System.out.println("asdsadasd");
         controller.setClient(client);
- //       System.out.println("ssdas");
         root.getScene().setRoot(screenRoot);
 
     }
@@ -117,15 +115,9 @@ public class CategoryController implements Initializable {
         }
 
     }
-    public void setClient(Client theClient, int init){
+    public void setClient(Client theClient){
         this.client = theClient;
-        if (init == 1) {
-            this.client.receiveObject();
-            if(client.gameInfo.gameStatus == -2) {
-                client.gameInfo.gameStatus = 2;
-                this.client.sentObject();
-            }
-        }
+
 
         startRound();
         disableWonCategory();

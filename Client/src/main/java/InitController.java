@@ -52,7 +52,7 @@ public class InitController implements Initializable {
                return;
            }
             try{
-                CategoryScene();
+                GameMenuScene();
             } catch (Exception error) {
                 System.out.println("failed to change scene");
                 error.printStackTrace();
@@ -90,15 +90,15 @@ public class InitController implements Initializable {
         this.client = theClient;
     }
 
-    public void CategoryScene() throws IOException {
+    public void GameMenuScene() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/GameMenu.fxml"));
         Parent Catroot = fxmlLoader.load();
-        CategoryController controller = fxmlLoader.<CategoryController>getController();
-        controller.setClient(client, 1);
+        GameMenuController controller = fxmlLoader.<GameMenuController>getController();
+        controller.setClient(client);
 
         Scene s1 = new Scene(Catroot, 700, 700);
-        s1.getStylesheets().add("/style/Category.css");
+        //s1.getStylesheets().add("/style/GameMenu.css");
         ((Stage)root.getScene().getWindow()).setScene(s1);
 
     }

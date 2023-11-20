@@ -8,12 +8,12 @@
 
 <VBox fx:id="root" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="EndScreenController"
+            fx:controller="GameMenuController"
             prefHeight="400.0" prefWidth="600.0">
 
 
-    <Label fx:id="title">Game Over</Label>
-    <Label fx:id="result">Victory/Defeat</Label>
-    <Button fx:id="gameMenu"  onAction="#menuButton">Game Menu</Button>
 
+    <Button fx:id="start" onAction="#exitButton" >Start</Button>
+
+    <Button fx:id="Exit" onAction="#startButton" >Exit</Button>
 </VBox>
