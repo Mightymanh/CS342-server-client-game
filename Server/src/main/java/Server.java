@@ -24,7 +24,7 @@ public class Server {
 		try {
 			listenT.serverS.close();
 			int length = clientThreadList.size();
-			for (int i = 0; i < length; i++) {
+			for (int i = length - 1; i >= 0; i++) {
 				ClientThread cl = clientThreadList.get(i);
 				cl.shutdownThread();
 			}
@@ -127,10 +127,9 @@ public class Server {
 							respondClient();
 						}
 						gc.postRoundUpdate();
+						sendGameOutCome(); 
 					} while (gc.gameStatus == 0);
 					
-					// when game ends, send to client so they know whether game lost or game won
-					sendGameOutCome();
 					break;
 				}
 			}
@@ -244,10 +243,10 @@ public class Server {
 			if (gc.gameStatus == 1) {
 				callback.accept("Client #" + count + " wins game");
 			}
-			else {
+			else if (gc.gameStatus == -1 ){
 				callback.accept("Client #" + count + "loses game");
 			}
-			
+
 			message.gameStatus = gc.gameStatus;
 			out.reset();
 			out.writeObject(message);
