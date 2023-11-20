@@ -116,7 +116,11 @@ public class Server {
 			try {
 				while (true) {
 					initGameDetail(); 
-					freshStartGame();
+					boolean exit = freshStartGame(); 
+					if (exit) {
+						shutdownThread();
+						break;
+					}
 					do {
 						startRound();
 						getClientCategory();
@@ -129,8 +133,6 @@ public class Server {
 						gc.postRoundUpdate();
 						sendGameOutCome(); 
 					} while (gc.gameStatus == 0);
-					
-					break;
 				}
 			}
 			catch (Exception e) {
@@ -149,7 +151,7 @@ public class Server {
 		}
 		
 		// RECEIVE client signal to start game, initialize all game component
-		public void freshStartGame() throws ClassNotFoundException, IOException {
+		public boolean freshStartGame() throws ClassNotFoundException, IOException {
 			if (DEBUG) {System.out.println("at freshStartGame for client #" + count);} // TESTING
 
 			// receive start game signal
@@ -158,9 +160,15 @@ public class Server {
 				callback.accept("Client #" + count + " start game");
 				gc.resetGame(); // zero game components
 				gc.gameStatus = 0; // signal that game is starting
+				return false;
+			}
+			else if (message.gameStatus == -3){ 
+				callback.accept("Client #" + count + " exits game");
+				return true;
 			}
 			else {
-				System.out.println("Client #" + count + " not start game");
+				callback.accept("Somethings wrong with client#" + count + " .Terminating client");
+				return true;
 			}
 		}
 		
@@ -219,7 +227,7 @@ public class Server {
 				gc.guessRemain--;
 				if (gc.guessRemain == 0) { // if client has no guess left then client loses the round
 					gc.roundStatus = -1;
-					callback.accept("Client #" + count + " lose round" + gc.round);
+					callback.accept("Client #" + count + " lose round " + gc.round);
 					sendRoundLost(position);
 				}
 				else { // case when client still survive
@@ -244,7 +252,7 @@ public class Server {
 				callback.accept("Client #" + count + " wins game");
 			}
 			else if (gc.gameStatus == -1 ){
-				callback.accept("Client #" + count + "loses game");
+				callback.accept("Client #" + count + " loses game");
 			}
 
 			message.gameStatus = gc.gameStatus;
