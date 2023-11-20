@@ -16,7 +16,7 @@ public class GameControl {
 	public int round;
 	public char guessLetter;
 	public int guessRemain;
-	public int roundStatus; // -2 means round is not started, -1 means lost, 1 means win, 2 means running
+	public int roundStatus; // -2 means round is not started, -1 means lost, 1 means win, 0 means running
 	
 	// game variable
 	public HashMap<String, ArrayList<String>> UsedList;
@@ -103,7 +103,8 @@ public class GameControl {
 				break;
 			}
 		} 
-		
+
+		System.out.print("Answer: "+ word);
 		// set variables important for client and server communication
 		numLetter = word.length();
 		numLetterRemain = numLetter;
@@ -142,10 +143,6 @@ public class GameControl {
 		}
 		else { // if client ended wining the round
 			losingStreak = 0;
-			if(categoryStatus == null) {
-				System.out.println("cate status is empty");
-
-			}
 			categoryStatus.replace(category, 1);
 			
 			if (checkWinningGame()) {

@@ -14,6 +14,6 @@
 
     <Label fx:id="title">Game Over</Label>
     <Label fx:id="result">Victory/Defeat</Label>
-    <Button fx:id="restart">Restart</Button>
-    <Button fx:id="exit" onAction="#exit">Exit</Button>
+    <Button fx:id="restart"  onAction="#restartButton">Restart</Button>
+    <Button fx:id="exit" onAction="#exitButton">Exit</Button>
 </VBox>

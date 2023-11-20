@@ -38,7 +38,7 @@
     </Label>
 
 
-    <TextField fx:id="letterField" >
+    <TextField fx:id="letterField"  onAction="#uploadLetter">
 
     </TextField>
 

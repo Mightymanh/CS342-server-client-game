@@ -95,7 +95,7 @@ public class InitController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
         Parent Catroot = fxmlLoader.load();
         CategoryController controller = fxmlLoader.<CategoryController>getController();
-        controller.setClient(client);
+        controller.setClient(client, 1);
 
         Scene s1 = new Scene(Catroot, 700, 700);
         s1.getStylesheets().add("/style/Category.css");

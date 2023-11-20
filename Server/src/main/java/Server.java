@@ -171,7 +171,7 @@ public class Server {
 			// receive start round signal
 		//	out.writeObject(message);
 			message = (GameDetail)in.readObject();
-			if (message.roundStatus == 2) { // if client says starts round (roundStatus = 0) then server starts round
+			if (message.roundStatus == 0) { // if client says starts round (roundStatus = 0) then server starts round
 				callback.accept("Client #" + count + " start round");
 				gc.startRound();
 			}

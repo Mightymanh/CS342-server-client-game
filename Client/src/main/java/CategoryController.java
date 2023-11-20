@@ -1,6 +1,7 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CategoryController implements Initializable {
@@ -101,18 +103,30 @@ public class CategoryController implements Initializable {
 
 
     public void startRound(){
-        this.client.gameInfo.roundStatus = 2;
+        this.client.gameInfo.roundStatus = 0;
         this.client.sentObject();
     }
 
-    public void setClient(Client theClient){
-        this.client = theClient;
-        this.client.receiveObject();
-        if(client.gameInfo.gameStatus == -2) {
-            client.gameInfo.gameStatus = 2;
+
+    public void disableWonCategory(){
+        for(Node i: categoryBox.getChildren()) {
+            if(client.categoryWon.get(((Button)i).getText()) == 1) {
+                i.setDisable(true);
+            }
         }
 
-        this.client.sentObject();
+    }
+    public void setClient(Client theClient, int init){
+        this.client = theClient;
+        if (init == 1) {
+            this.client.receiveObject();
+            if(client.gameInfo.gameStatus == -2) {
+                client.gameInfo.gameStatus = 2;
+                this.client.sentObject();
+            }
+        }
+
         startRound();
+        disableWonCategory();
     }
 }

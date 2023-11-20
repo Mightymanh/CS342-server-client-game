@@ -3,6 +3,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+
 public class Client {
 
     String word;
@@ -15,8 +17,16 @@ public class Client {
 
     ObjectInputStream in;
 
+    HashMap<String, Integer>  categoryWon;
 
 
+
+    public Client() {
+        categoryWon = new HashMap<>();
+        categoryWon.put("animal", 0);
+        categoryWon.put("tools", 0);
+        categoryWon.put("weather", 0);
+    }
     public boolean connect(int port) {
         try{
             System.out.println("trying to connect");
@@ -81,6 +91,15 @@ public class Client {
         word = String.valueOf(a);
 
         return true;
+    }
+
+    public void reset() {
+        categoryWon.put("animal", 0);
+        categoryWon.put("tools", 0);
+        categoryWon.put("weather", 0);
+
+        word = null;
+        gameInfo=null;
     }
 
 

@@ -59,6 +59,7 @@ public class ScreenController implements Initializable {
 
         }
 
+        nextButton.setDisable(true);
 
 
 
@@ -66,10 +67,15 @@ public class ScreenController implements Initializable {
 
 
     public void uploadLetter() {
-
+        if(enterButton.isDisable()) {
+            nextButton();
+            return;
+        }
+        curLetter = "";
         curLetter = letterField.getText();
 
-        if(curLetter.length() > 1 || !Character.isLetter(curLetter.charAt(0))) {
+        letterField.clear();
+        if(curLetter.length() != 1 || !Character.isLetter(curLetter.charAt(0))) {
 
             promptText.setText("Invalid Input");
             return;
@@ -102,15 +108,17 @@ public class ScreenController implements Initializable {
 
             client.updateWord(curLetter.charAt(0), client.gameInfo.position);
 
-        } else if (client.gameInfo.guessRemain == 0){
-                System.out.println("Round over");
-    } else{
+        }  else{
             updateLetterResult("Incorrect");
         }
+
         
     //    System.out.println("weweewe");
 
         curWord.setText(client.word);
+        if (client.gameInfo.roundStatus != 0){
+            endOfRound();
+        }
     }
     
     public void updateLetterResult(String result) {
@@ -119,11 +127,32 @@ public class ScreenController implements Initializable {
         
     }
 
+    public void endOfRound() {
+        enterButton.setDisable(true);
+        nextButton.setDisable(false);
+        if(client.gameInfo.roundStatus == 1) {
+            // disable the category
+            client.categoryWon.replace(CategoryName.getText(), 1);
+            updateLetterResult("You win this round. Press next to continue");
+
+        } else if (client.gameInfo.roundStatus == -1) {
+            updateLetterResult("You lost this round. Press next to continue");
+        }
+    }
+
     public void nextButton()  {
-
-
+        client.receiveObject(); // receiving game status
         try{
-            EndScreen();
+
+            if (client.gameInfo.gameStatus== 0) {
+                // continue the game
+                CategoryScene();
+
+            } else {
+                // endGame scene
+                EndScreen();
+            }
+
         } catch (Exception err) {
             System.out.println("unable to change scene");
             err.printStackTrace();
@@ -134,10 +163,18 @@ public class ScreenController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/EndScreen.fxml"));
         Parent Endroot = fxmlLoader.load();
         EndScreenController controller = fxmlLoader.<EndScreenController>getController();
+        controller.setClient(this.client);
         root.getScene().setRoot(Endroot);
     }
 
 
+    public void CategoryScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Category.fxml"));
+        Parent cateRoot = fxmlLoader.load();
+        CategoryController controller = fxmlLoader.<CategoryController>getController();
+        controller.setClient(this.client, 0);
+        root.getScene().setRoot(cateRoot);
+    }
 
     public void displayWord(){
         this.curWord.setText(this.client.word);
@@ -149,6 +186,7 @@ public class ScreenController implements Initializable {
         displayWord();
 
     }
+
 
 
 }
