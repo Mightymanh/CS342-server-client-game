@@ -125,6 +125,9 @@ public class Server {
 						startRound();
 						getClientCategory();
 						gc.getWord();
+						if(DEBUG) {
+							System.out.println("word for client #" +count + ": "+gc.word+" ");
+						}
 						sendNumLetter();
 						while (gc.roundStatus == 0) {
 							getClientGuess();

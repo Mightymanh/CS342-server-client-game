@@ -102,9 +102,7 @@ public class GameControl {
 				UsedList.get(category).add(word); // add word to UsedList if it is not chosen before
 				break;
 			}
-		} 
-
-		System.out.print("Answer: "+ word);
+		}
 		// set variables important for client and server communication
 		numLetter = word.length();
 		numLetterRemain = numLetter;

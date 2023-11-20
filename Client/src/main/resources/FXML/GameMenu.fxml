@@ -13,7 +13,7 @@
 
 
 
-    <Button fx:id="start" onAction="#exitButton" >Start</Button>
+    <Button fx:id="start" onAction="#startButton" >Start</Button>
 
-    <Button fx:id="Exit" onAction="#startButton" >Exit</Button>
+    <Button fx:id="Exit" onAction="#exitButton" >Exit</Button>
 </VBox>
