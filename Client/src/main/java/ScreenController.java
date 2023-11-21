@@ -9,14 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class ScreenController implements Initializable {
     @FXML
@@ -186,15 +185,15 @@ public class ScreenController implements Initializable {
     public void displayWord(){
 
         StringBuilder displayString = new StringBuilder(10);
-
-        for(int i  = 0; i < this.client.word.length();i++) {
+        
+        int lengthWord = this.client.word.length();
+        for(int i  = 0; i < lengthWord - 1; i++) {
             displayString.append(this.client.word.charAt(i));
             displayString.append(' ');
-            displayString.append(' ');
+            //displayString.append(' ');
         }
-
-        displayString.deleteCharAt(displayString.length()-1);
-
+        displayString.append(this.client.word.charAt(lengthWord - 1));
+        
         this.curWord.setText(displayString.toString());
     }
     public void setClient(Client theClient){
