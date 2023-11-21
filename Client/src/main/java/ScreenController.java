@@ -3,6 +3,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -165,7 +167,9 @@ public class ScreenController implements Initializable {
         Parent Endroot = fxmlLoader.load();
         EndScreenController controller = fxmlLoader.<EndScreenController>getController();
         controller.setClient(this.client);
-        root.getScene().setRoot(Endroot);
+        Scene s1 = new Scene(Endroot, 600, 500);
+        s1.getStylesheets().add("/style/EndScreen.css");
+        ((Stage)root.getScene().getWindow()).setScene(s1);
     }
 
 
@@ -174,11 +178,24 @@ public class ScreenController implements Initializable {
         Parent cateRoot = fxmlLoader.load();
         CategoryController controller = fxmlLoader.<CategoryController>getController();
         controller.setClient(this.client);
-        root.getScene().setRoot(cateRoot);
+        Scene s1 = new Scene(cateRoot, 600, 500);
+        s1.getStylesheets().add("/style/Category.css");
+        ((Stage)root.getScene().getWindow()).setScene(s1);
     }
 
     public void displayWord(){
-        this.curWord.setText(this.client.word);
+
+        StringBuilder displayString = new StringBuilder(10);
+
+        for(int i  = 0; i < this.client.word.length();i++) {
+            displayString.append(this.client.word.charAt(i));
+            displayString.append(' ');
+            displayString.append(' ');
+        }
+
+        displayString.deleteCharAt(displayString.length()-1);
+
+        this.curWord.setText(displayString.toString());
     }
     public void setClient(Client theClient){
         this.client = theClient;

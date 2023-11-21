@@ -3,30 +3,39 @@
 	-fx-alignment: CENTER;
 }
 
-/*
+
 #root{
-    -fx-alignment: CENTER;
-}*/
+    -fx-min-width: 600;
+    -fx-min-height: 500;
+}
 
 #title {
 
-    -fx-pref-width: 200;
-    -fx-pref-height: 100;
+    -fx-min-width: 200;
+    -fx-min-height: 100;
 
-    -fx-font-size : 20;
+
+    -fx-font-weight:BOLD;
+    -fx-font-size : 40;
 
 
 }
 #confirm {
     -fx-pref-width: 200;
     -fx-pref-height: 100;
+    -fx-font-size:20;
 }
 #portBox {
     -fx-pref-width: 100;
     -fx-pref-height: 100;
-
+    -fx-max-width: 200;
+    -fx-font-size:40;
 }
-
+#prompt {
+    -fx-font-size: 20;
+}
 #vboxContainer {
     -fx-spacing: 20;
+    -fx-min-width: 600;
+    -fx-min-height: 500;
 }

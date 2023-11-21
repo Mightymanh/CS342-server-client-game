@@ -9,15 +9,15 @@
 <VBox fx:id="root" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ScreenController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="500.0" prefWidth="600.0">
 
 
-    <HBox>
+
         <Label fx:id="attemptLabel">
-            Attempt: 6;
+            Attempt: 6
         </Label>
 
-    </HBox>
+
 
 
     <Label fx:id="CategoryName">

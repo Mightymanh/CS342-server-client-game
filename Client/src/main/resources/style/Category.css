@@ -6,8 +6,57 @@
 
 #VBoxContainer {
 
-    -fx-pref-width: 700;
-    -fx-pref-height: 700;
+    -fx-pref-width: 600;
+    -fx-pref-height: 500;
+    -fx-spacing: 30;
+}
+#title {
 
+    -fx-font-size:30;
+    -fx-font-weight: BOLD;
+    -fx-pref-width: 300;
+    -fx-pref-height: 100;
+}
+
+#categoryBox {
+    -fx-spacing: 20;
+}
+
+#animalButton {
+    -fx-background-image: url('../image/animal.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+#weatherButton {
+    -fx-background-image: url('../image/weather.png');
+    -fx-background-size: 140;
+    -fx-background-repeat: no-repeat;
+}
+
+#toolsButton {
+    -fx-background-image: url('../image/tools.png');
+    -fx-background-size: 130;
+    -fx-background-repeat: no-repeat;
 
 }
+.button{
+    -fx-pref-height: 150;
+    -fx-pref-width: 150;
+
+    -fx-text-fill: transparent;
+
+}
+
+#enterButton {
+    -fx-pref-height: 100;
+    -fx-pref-width: 200;
+    -fx-text-fill: black;
+    -fx-font-size: 30;
+    -fx-font-weight: BOLD;
+}
+#root {
+    -fx-pref-width: 600;
+    -fx-pref-height: 500;
+}
+

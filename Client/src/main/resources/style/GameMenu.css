@@ -1,0 +1,23 @@
+*{
+    -fx-alignment:Center;
+}
+
+
+#root {
+
+    -fx-spacing: 40;
+}
+
+#Title {
+    -fx-min-width: 200;
+    -fx-max-height: 100;
+    -fx-font-weight: BOLD;
+    -fx-font-size: 50;
+
+}
+
+.button{
+    -fx-min-width: 200;
+    -fx-max-height: 100;
+    -fx-font-size: 20;
+}

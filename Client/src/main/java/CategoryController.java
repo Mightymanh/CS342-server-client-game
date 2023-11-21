@@ -3,10 +3,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -28,19 +31,25 @@ public class CategoryController implements Initializable {
 
     @FXML
     public Button enterButton;
-    public Menu option;
-    public MenuItem restart;
-    public MenuItem exit;
 
     @FXML
     public HBox root;
     public VBox VBoxContainer;
+    public Button animalButton;
+    public Button weatherButton;
+    public Button toolsButton;
     private String CategoryChose;
     public Client client;
     void handleEvent(){
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //Image img = new Image("image/animal.png");
+     //   ImageView view = new ImageView(img);
+     //   view.setFitHeight(80);
+     //   view.setPreserveRatio(true);
+     //   animalButton.getBackground().
         this.CategoryChose = null;
         handleEvent();
 
@@ -96,7 +105,9 @@ public class CategoryController implements Initializable {
         Parent screenRoot = fxmlLoader.load();
         ScreenController controller = fxmlLoader.<ScreenController>getController();
         controller.setClient(client);
-        root.getScene().setRoot(screenRoot);
+        Scene s1 = new Scene(screenRoot, 600, 500);
+        s1.getStylesheets().add("/style/GameScreen.css");
+        ((Stage)root.getScene().getWindow()).setScene(s1);
 
     }
 

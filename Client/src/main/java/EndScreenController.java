@@ -50,8 +50,8 @@ public class EndScreenController implements Initializable {
             GameMenuController controller = fxmlLoader.<GameMenuController>getController();
             controller.setClient(client);
 
-            Scene s1 = new Scene(Catroot, 700, 700);
-            //s1.getStylesheets().add("/style/GameMenu.css");
+            Scene s1 = new Scene(Catroot, 600, 500);
+            s1.getStylesheets().add("/style/GameMenu.css");
             ((Stage)root.getScene().getWindow()).setScene(s1);
         } catch (Exception e) {
             System.out.println("Failed to change scene");

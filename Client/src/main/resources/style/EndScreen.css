@@ -1,0 +1,28 @@
+*{
+    -fx-alignment:Center;
+    -fx-font-size: 30;
+}
+
+#root {
+
+    -fx-spacing:  30;
+}
+
+
+#title {
+    -fx-font-weight: BOLD;
+    -fx-underline: true;
+}
+
+#result {
+    -fx-font-weight: BOLD;
+}
+
+
+
+
+.button {
+    -fx-min-width: 200;
+    -fx-max-height: 100;
+    -fx-font-size: 20;
+}

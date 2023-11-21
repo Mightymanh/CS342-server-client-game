@@ -9,12 +9,12 @@
 <HBox fx:id="root" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="InitController"
-      prefHeight="700.0" prefWidth="700.0">
+      prefHeight="500.0" prefWidth="600.0">
     <VBox fx:id="vboxContainer">
 
         <Label fx:id="title"> Client Application </Label>
         <Label fx:id="prompt"> Port Number: </Label>
-        <TextField fx:id="portBox" promptText="Enter your port number"> </TextField>
+        <TextField fx:id="portBox" > </TextField>
         <Button fx:id="confirm">Confirm</Button>
 
     </VBox>
