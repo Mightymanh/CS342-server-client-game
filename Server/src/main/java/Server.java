@@ -31,7 +31,6 @@ public class Server {
 		}
 		catch (Exception ex) {
 			System.out.println("Cannot close server for some reason");
-			ex.printStackTrace();
 		}
 	}
 	
@@ -62,7 +61,9 @@ public class Server {
 				
 				while(true) {
 					System.out.println("beating");
-					ClientThread clientT = new ClientThread(serverS.accept(), count);
+					Socket connection = serverS.accept();
+					System.out.println("finish beating");
+					ClientThread clientT = new ClientThread(connection, count);
 					callback.accept("Client has connected to server: client #" + count);
 					clientThreadList.add(clientT);
 					clientT.start();
@@ -70,6 +71,7 @@ public class Server {
 				}
 			}
 			catch(Exception e) {
+				System.out.println("Server socket did not launch");
 				callback.accept("Server socket did not launch.");
 			}
 		}
