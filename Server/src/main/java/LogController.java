@@ -32,6 +32,9 @@ public class LogController implements Initializable {
 	@FXML
 	BorderPane logRoot;
 	
+	@FXML
+	Label numClientLabel;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

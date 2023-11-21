@@ -59,6 +59,7 @@ public class StartController implements Initializable {
 		};
 				
 		ServerGUI.server = new Server(port, call);	
+		ServerGUI.logCtrl = ctrl;
 		ctrl.portNumLabel.setText("Listening on port: " + ServerGUI.server.port);
 	}
 	

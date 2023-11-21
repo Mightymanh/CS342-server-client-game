@@ -14,7 +14,7 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" styleClass="l" contentDisplay="CENTER" prefHeight="50.0" prefWidth="167.0" text="Server log">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="167.0" styleClass="l" text="Server log">
                <font>
                   <Font size="32.0" />
                </font>
@@ -23,7 +23,12 @@
                </padding></Label>
             <Label fx:id="portNumLabel">
                <padding>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets bottom="5.0" top="7.0" />
+               </padding>
+            </Label>
+            <Label fx:id="numClientLabel" text="Number of clients: 0">
+               <padding>
+                  <Insets bottom="5.0" />
                </padding>
             </Label>
             <ListView fx:id="list" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="319.0" prefWidth="448.0" />

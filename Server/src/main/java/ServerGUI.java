@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class ServerGUI extends Application {
 
+	static LogController logCtrl;
 	static Server server;
 	
 	public static void main(String[] args) {

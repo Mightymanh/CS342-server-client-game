@@ -7,7 +7,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import javafx.application.Platform;
+
 public class Server {
+	
 	int port;
 	int count;
 	ArrayList<ClientThread> clientThreadList;
@@ -67,6 +70,9 @@ public class Server {
 					callback.accept("Client has connected to server: client #" + count);
 					clientThreadList.add(clientT);
 					clientT.start();
+					Platform.runLater(() -> {
+						ServerGUI.logCtrl.numClientLabel.setText("Number of clients: " + clientThreadList.size());
+					});
 					count++;
 				}
 			}
@@ -116,6 +122,9 @@ public class Server {
 					boolean exit = freshStartGame(); 
 					if (exit) {
 						shutdownThread();
+						Platform.runLater(() -> {
+							ServerGUI.logCtrl.numClientLabel.setText("Number of clients: " + clientThreadList.size());
+						});
 						return;
 					}
 					do { // round
@@ -138,6 +147,9 @@ public class Server {
 			catch(Exception e) {
 				callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
 				shutdownThread();
+				Platform.runLater(() -> {
+					ServerGUI.logCtrl.numClientLabel.setText("Number of clients: " + clientThreadList.size());
+				});
 			}
 			
 		}
