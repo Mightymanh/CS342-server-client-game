@@ -97,9 +97,10 @@ public class InitController implements Initializable {
         GameMenuController controller = fxmlLoader.<GameMenuController>getController();
         controller.setClient(client);
 
-        Scene s1 = new Scene(Catroot, 700, 700);
+        //Scene s1 = new Scene(Catroot, 700, 700);
         //s1.getStylesheets().add("/style/GameMenu.css");
-        ((Stage)root.getScene().getWindow()).setScene(s1);
+        root.getScene().setRoot(Catroot);
+        //((Stage)root.getScene().getWindow()).setScene(s1);
 
     }
 

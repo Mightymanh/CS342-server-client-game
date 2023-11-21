@@ -1,9 +1,13 @@
 
+* {
+	-fx-alignment: CENTER;
+}
 
-
+/*
 #root{
     -fx-alignment: CENTER;
-}
+}*/
+
 #title {
 
     -fx-pref-width: 200;

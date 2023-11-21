@@ -63,9 +63,8 @@ public class Server {
 				callback.accept("Server is waiting for a client on port: " + port);
 				
 				while(true) {
-					System.out.println("beating");
+					if (DEBUG) System.out.println("beating ...");
 					Socket connection = serverS.accept();
-					System.out.println("finish beating");
 					ClientThread clientT = new ClientThread(connection, count);
 					callback.accept("Client has connected to server: client #" + count);
 					clientThreadList.add(clientT);
