@@ -102,7 +102,7 @@ public class CategoryController implements Initializable {
 
 
     public void startRound(){
-        this.client.gameInfo.roundStatus = 0;
+        this.client.gameInfo.roundStatus = 2;
         this.client.sentObject();
     }
 

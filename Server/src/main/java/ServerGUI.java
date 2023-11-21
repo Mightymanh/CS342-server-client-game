@@ -26,8 +26,8 @@ public class ServerGUI extends Application {
 		BorderPane root = loader.load();
 		
 		// initialize scene
-		Scene scene = new Scene(root, 500, 400);
-		//scene.getStylesheets().add("/styles/style.css");
+		Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+		scene.getStylesheets().add("/Style/style.css");
 
 		// show scene
 		primaryStage.setScene(scene);

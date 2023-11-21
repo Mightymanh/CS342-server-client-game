@@ -39,7 +39,7 @@ public class LogController implements Initializable {
 	
 	// actionEvent for exitApp
 	public void exitApp(ActionEvent e) {
-		Platform.exit();
+		System.exit(0);
 	}
 	
 	// actionEvent for closeServer

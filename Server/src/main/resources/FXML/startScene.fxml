@@ -10,18 +10,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="startRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StartController">
+<BorderPane fx:id="startRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="StartController">
    <center>
       <VBox fx:id="center" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="serverLabel" prefHeight="48.0" prefWidth="96.0" text="Server">
+            <Label fx:id="serverLabel" alignment="CENTER" prefHeight="70.0" prefWidth="130.0" styleClass="l" text="Server">
                <font>
-                  <Font size="35.0" />
+                  <Font size="38.0" />
                </font>
             </Label>
-            <Label fx:id="warningLabel" textAlignment="CENTER" textFill="RED" />
-            <TextField fx:id="prompt" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="74.0" prefWidth="324.0" promptText="Enter your port number" />
-            <Button fx:id="confirmButton" mnemonicParsing="false" text="Confirm" onAction="#getPortCreateServer"/>
+            <Label fx:id="warningLabel" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <TextField fx:id="prompt" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="74.0" prefWidth="324.0" promptText="Enter your port number">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#getPortCreateServer" prefHeight="77.0" prefWidth="158.0" styleClass="button" text="Confirm">
+               <font>
+                  <Font size="28.0" />
+               </font></Button>
          </children>
       </VBox>
    </center>
@@ -30,7 +39,7 @@
          <menus>
             <Menu fx:id="menu" mnemonicParsing="false" text="Option">
               <items>
-                <MenuItem fx:id="exitApp" mnemonicParsing="false" text="exit app" onAction="#ExitApp" />
+                <MenuItem fx:id="exitApp" mnemonicParsing="false" onAction="#ExitApp" text="exit app" />
               </items>
             </Menu>
          </menus>

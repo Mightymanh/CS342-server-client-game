@@ -24,7 +24,7 @@ public class Server {
 		try {
 			listenT.serverS.close();
 			int length = clientThreadList.size();
-			for (int i = length - 1; i >= 0; i++) {
+			for (int i = length - 1; i >= 0; i--) {
 				ClientThread cl = clientThreadList.get(i);
 				cl.shutdownThread();
 			}
@@ -32,6 +32,7 @@ public class Server {
 		}
 		catch (Exception ex) {
 			System.out.println("Cannot close server for some reason");
+			ex.printStackTrace();
 		}
 	}
 	
@@ -61,6 +62,7 @@ public class Server {
 				callback.accept("Server is waiting for a client on port: " + port);
 				
 				while(true) {
+					System.out.println("beating");
 					ClientThread clientT = new ClientThread(serverS.accept(), count);
 					callback.accept("Client has connected to server: client #" + count);
 					clientThreadList.add(clientT);
@@ -106,22 +108,16 @@ public class Server {
 				in = new ObjectInputStream(connection.getInputStream());
 				out = new ObjectOutputStream(connection.getOutputStream());
 				connection.setTcpNoDelay(true);	
-			}
-			catch(Exception e) {
-				System.out.println("Streams not open for client #" + count);
-				return;
-			}
 			
-			// doing one game TODO: DO MULTIPLE GAMES
-			try {
+				// game
 				while (true) {
 					initGameDetail(); 
 					boolean exit = freshStartGame(); 
 					if (exit) {
 						shutdownThread();
-						break;
+						return;
 					}
-					do {
+					do { // round
 						startRound();
 						getClientCategory();
 						gc.getWord();
@@ -138,7 +134,7 @@ public class Server {
 					} while (gc.gameStatus == 0);
 				}
 			}
-			catch (Exception e) {
+			catch(Exception e) {
 				callback.accept("Some thing is wrong with client #" + count + ". Terminating client.");
 				shutdownThread();
 			}
@@ -170,8 +166,7 @@ public class Server {
 				return true;
 			}
 			else {
-				callback.accept("Somethings wrong with client#" + count + " .Terminating client");
-				return true;
+				throw new IOException();
 			}
 		}
 		
@@ -182,12 +177,14 @@ public class Server {
 			// receive start round signal
 		//	out.writeObject(message);
 			message = (GameDetail)in.readObject();
-			if (message.roundStatus == 0) { // if client says starts round (roundStatus = 0) then server starts round
-				callback.accept("Client #" + count + " start round");
+			if (message.roundStatus == 2) { // if client says starts round (roundStatus = 2) then server starts round
+				
 				gc.startRound();
+				callback.accept("Client #" + count + " start round " + gc.round);
 			}
 			else {
-				System.out.println("Client #" + count + " not start round");
+				System.out.println("Client #" + count + " not start round"); // something not obey to communication protocol
+				throw new IOException();
 			}
 		}
 		
@@ -198,13 +195,13 @@ public class Server {
 			// receive category
 			message = (GameDetail)in.readObject();
 			gc.category = message.category;
-			callback.accept("Get client #" + count + " category: " + gc.category);
+			callback.accept("Client #" + count + " get category: " + gc.category);
 		}
 		
 		// SEND the number of letter of chosen word to client
 		public void sendNumLetter() throws IOException {
 			if (DEBUG) {System.out.println("at sendNumLetter for client #" + count);}
-			callback.accept("client #0 get to guess word: " + gc.word + ", length: " + gc.numLetter);
+			callback.accept("Client #0 get to guess word: " + gc.word + ", length: " + gc.numLetter);
 			message.wordLength = gc.numLetter;
 			out.reset();
 			out.writeObject(message);
@@ -217,7 +214,7 @@ public class Server {
 			// receive guess letter
 			message = (GameDetail)in.readObject();
 			gc.guessLetter = message.guessLetter;
-			callback.accept("Get client #" + count + " guess letter: " + gc.guessLetter);
+			callback.accept("Client #" + count + " guess letter: " + gc.guessLetter);
 		}
 		
 		
@@ -230,7 +227,7 @@ public class Server {
 				gc.guessRemain--;
 				if (gc.guessRemain == 0) { // if client has no guess left then client loses the round
 					gc.roundStatus = -1;
-					callback.accept("Client #" + count + " lose round " + gc.round);
+					callback.accept("Client #" + count + " loses round " + gc.round);
 					sendRoundLost(position);
 				}
 				else { // case when client still survive
@@ -240,7 +237,7 @@ public class Server {
 			else { // if the client guesses the letter correctly
 				if (gc.numLetterRemain == 0) { // if client guess all the letter in the word then the client wins the round
 					gc.roundStatus = 1;
-					callback.accept("Client #" + count + " win round " + gc.round);
+					callback.accept("Client #" + count + " wins round " + gc.round);
 					sendRoundWin(position);
 				} 
 				else { // client needs to guess more letter to finish

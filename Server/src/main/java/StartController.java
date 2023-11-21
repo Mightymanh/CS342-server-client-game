@@ -53,6 +53,7 @@ public class StartController implements Initializable {
 		Consumer<Serializable> call = (data) -> {
 			Platform.runLater(() -> {
 				list.getItems().add(data.toString());
+				list.scrollTo(list.getItems().size() - 1);
 				//System.out.println(data.toString());
 			});	
 		};
@@ -84,6 +85,6 @@ public class StartController implements Initializable {
 	
 	// actionEvent for exitApp
 	public void ExitApp(ActionEvent e) {
-		Platform.exit();
+		System.exit(0);
 	}
 }

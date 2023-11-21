@@ -1,0 +1,13 @@
+.root {
+	-fx-background-color: orange;
+}
+
+.button {
+	-fx-background-color: yellow;
+}
+
+
+.l {
+	-fx-font-family: Arial;
+	-fx-font-weight: bold;
+}
