@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class Server {
@@ -196,6 +195,11 @@ public class Server {
 			message = (GameDetail)in.readObject();
 			gc.category = message.category;
 			callback.accept("Client #" + count + " get category: " + gc.category);
+			
+			// if invalid category, terminate client and exit game
+			if (message.category == null) {
+				throw new IOException();
+			}
 		}
 		
 		// SEND the number of letter of chosen word to client
@@ -215,6 +219,11 @@ public class Server {
 			message = (GameDetail)in.readObject();
 			gc.guessLetter = message.guessLetter;
 			callback.accept("Client #" + count + " guess letter: " + gc.guessLetter);
+			
+			// if invalid guess letter, exit game and terminate client
+			if (message.guessLetter == (char)0) {
+				throw new IOException();
+			}
 		}
 		
 		
