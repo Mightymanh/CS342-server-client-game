@@ -117,7 +117,7 @@ public class ScreenController implements Initializable {
 
 
 
-        curWord.setText(client.word);
+        displayWord();
         if (client.gameInfo.roundStatus != 2){
             endOfRound();
         }
