@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.ArrayList;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +11,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 
 public class LogController implements Initializable {
-
-	private static final String ArrayList = null;
 
 	// components for log scene
 	@FXML
