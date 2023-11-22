@@ -8,8 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,8 +24,7 @@ import java.util.ResourceBundle;
 public class ScreenController implements Initializable {
     @FXML
     public Label CategoryName;
-    @FXML
-    public Label curWord;
+
     @FXML
     public Label promptText;
     @FXML
@@ -31,6 +34,9 @@ public class ScreenController implements Initializable {
     @FXML
     public Button nextButton;
 
+    @FXML
+    public HBox letterStack;
+    
     @FXML
     public TextField letterField;
     public Client client;
@@ -62,9 +68,6 @@ public class ScreenController implements Initializable {
         }
 
         nextButton.setDisable(true);
-
-
-
     }
 
 
@@ -87,10 +90,6 @@ public class ScreenController implements Initializable {
             promptText.setText("Letter already picked");
             return;
         }
-
-
-
-
 
         promptText.setText(curLetter);
         client.gameInfo.guessLetter= curLetter.charAt(0);
@@ -129,11 +128,12 @@ public class ScreenController implements Initializable {
     }
 
     public void endOfRound() {
+    	letterField.setDisable(true);
         enterButton.setDisable(true);
         nextButton.setDisable(false);
         if(client.gameInfo.roundStatus == 1) {
             // disable the category
-            client.categoryWon.replace(CategoryName.getText(), 1);
+            client.categoryWon.replace(CategoryName.getText().toLowerCase(), 1);
             updateLetterResult("You win this round. Press next to continue");
 
         } else if (client.gameInfo.roundStatus == -1) {
@@ -184,26 +184,38 @@ public class ScreenController implements Initializable {
 
     public void displayWord(){
 
-        StringBuilder displayString = new StringBuilder(10);
+    	int lengthWord = this.client.word.length();
         
-        int lengthWord = this.client.word.length();
-        for(int i  = 0; i < lengthWord - 1; i++) {
-            displayString.append(this.client.word.charAt(i));
-            displayString.append(' ');
-            //displayString.append(' ');
+        letterStack.getChildren().clear();
+        for (int i = 0; i < lengthWord; i++) {
+        	Rectangle shape = new Rectangle();
+        	shape.setWidth(70);
+        	shape.setHeight(70);
+        	char letter = client.word.charAt(i);
+        	Text text;
+        	if (letter == '_') {
+        		shape.setFill(Color.web("#4C4C4C"));
+        		text = new Text("_");
+        		text.setFill(Color.WHITE);
+        	}
+        	else {
+        		shape.setFill(Color.web("#a13670"));
+        		text = new Text(Character.toString(client.word.charAt(i)));
+        		text.setFill(Color.YELLOW);
+        	}
+        	
+        	StackPane stack = new StackPane();
+        	stack.getChildren().addAll(shape, text);
+        	letterStack.getChildren().add(stack);
+        	letterStack.setSpacing(15.5);
         }
-        displayString.append(this.client.word.charAt(lengthWord - 1));
-        
-        this.curWord.setText(displayString.toString());
     }
     public void setClient(Client theClient){
         this.client = theClient;
-        CategoryName.setText(this.client.gameInfo.category);
+        String displayedCategory = this.client.gameInfo.category.toUpperCase();
+        CategoryName.setText(displayedCategory);
         this.client.initWord();
         displayWord();
 
     }
-
-
-
 }

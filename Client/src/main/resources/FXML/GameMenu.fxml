@@ -12,7 +12,7 @@
             prefHeight="400.0" prefWidth="600.0">
 
 
-    <Label fx:id="Title">Word Guessing Game</Label>
+    <Label fx:id="Title" text="Word Guessing Game" />
     <Button fx:id="start" onAction="#startButton" >Start</Button>
 
     <Button fx:id="Exit" onAction="#exitButton" >Exit</Button>

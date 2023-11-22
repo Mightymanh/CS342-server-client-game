@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScreenController">
+<VBox fx:id="root" prefHeight="500.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScreenController">
 
 
 
@@ -17,18 +17,15 @@
 
 
 
-    <Label fx:id="CategoryName" id="CategoryName" />
-
-    <Label id="curWord" fx:id="curWord" />
+    <Label id="CategoryName" fx:id="CategoryName" />
+   <HBox id="letterStack" fx:id="letterStack" alignment="CENTER" prefHeight="44.0" prefWidth="600.0" spacing="15.0" />
 
     <Label id="promptText" fx:id="promptText">
         Pick a letter and hit Enter
     </Label>
 
 
-    <TextField id="letterField" fx:id="letterField" onAction="#uploadLetter">
-
-    </TextField>
+    <TextField id="letterField" fx:id="letterField" onAction="#uploadLetter" />
 
     <HBox id="ButtonField" fx:id="ButtonField">
         <Button fx:id="enterButton" onAction="#uploadLetter">Enter</Button>

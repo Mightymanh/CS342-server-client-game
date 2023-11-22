@@ -1,6 +1,9 @@
 /*
 	References:
-	
+	Use these images for background images to represent category
+	https://www.cleanpng.com/png-weather-map-free-content-clip-art-weather-symbols-598111/
+	https://www.cleanpng.com/png-hand-tool-clip-art-wrench-cliparts-107910/
+	https://www.rawpixel.com/image/6763363/png-sticker-public-domain
 */
 
 
@@ -9,17 +12,22 @@
     -fx-alignment: CENTER;
 }
 
+#root {
+	-fx-background-color: #cecee1;
+}
+
 #VBoxContainer {
 
     -fx-pref-width: 600;
     -fx-pref-height: 500;
     -fx-spacing: 30;
 }
-#title {
 
-    -fx-font-size:30;
+#title {
+	-fx-font-family: Arial;
+    -fx-font-size: 30;
     -fx-font-weight: BOLD;
-    -fx-pref-width: 300;
+    -fx-pref-width: 400;
     -fx-pref-height: 100;
 }
 
@@ -29,37 +37,57 @@
 
 #animalButton {
     -fx-background-image: url('../image/animal.png');
+    -fx-background-color: rgb(187, 160, 125);
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
+}
+
+#animalButton:hover{
+	-fx-background-color: #fad6a5;
 }
 
 #weatherButton {
     -fx-background-image: url('../image/weather.png');
     -fx-background-size: 140;
+    -fx-background-color: rgb(66, 101, 136);
     -fx-background-repeat: no-repeat;
+}
+
+#weatherButton:hover {
+	-fx-background-color: #6699cc;
 }
 
 #toolsButton {
     -fx-background-image: url('../image/tools.png');
     -fx-background-size: 130;
+    -fx-background-color: rgb(128, 128, 128);
     -fx-background-repeat: no-repeat;
 
 }
+
+#toolsButton:hover {
+	-fx-background-color: #cccccc;
+}
+
 .button{
     -fx-pref-height: 150;
     -fx-pref-width: 150;
-
     -fx-text-fill: transparent;
-
 }
 
 #enterButton {
+	-fx-text-fill: white;
+	-fx-background-color: rgb(194, 44, 50);
     -fx-pref-height: 100;
     -fx-pref-width: 200;
-    -fx-text-fill: black;
     -fx-font-size: 30;
     -fx-font-weight: BOLD;
 }
+
+#enterButton:hover {
+	-fx-background-color: rgb(255, 140, 127);
+}
+
 #root {
     -fx-pref-width: 600;
     -fx-pref-height: 500;

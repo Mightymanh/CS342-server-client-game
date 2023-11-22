@@ -1,28 +1,32 @@
 *{
     -fx-alignment:Center;
-    -fx-font-size: 30;
 }
 
 #root {
-
+	-fx-background-color: #cecee1;
     -fx-spacing:  30;
 }
 
 
 #title {
     -fx-font-weight: BOLD;
-    -fx-underline: true;
+	-fx-font-family: Arial;
 }
 
 #result {
     -fx-font-weight: BOLD;
+    -fx-font-family: Arial;
+}
+
+.button {
+	-fx-background-color: rgb(194, 44, 50);
+	-fx-text-fill: white;
+    -fx-min-width: 200;
+    -fx-max-height: 150;
+    -fx-font-size: 30;
 }
 
 
-
-
-.button {
-    -fx-min-width: 200;
-    -fx-max-height: 100;
-    -fx-font-size: 20;
+.button:hover {
+	-fx-background-color: rgb(255, 140, 127);
 }

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -34,9 +35,11 @@ public class EndScreenController implements Initializable {
 
     public void displayGameResult() {
         if(this.client.gameInfo.gameStatus==1){
-            result.setText("You Won");
+            result.setText("You won :)");
+            result.setTextFill(Color.YELLOW);
         } else if (this.client.gameInfo.gameStatus==-1){
-            result.setText("You Lost");
+            result.setText("You lost :(");
+            result.setTextFill(Color.RED);
         } else {
             result.setText("gamestatus is " + this.client.gameInfo.gameStatus);
         }

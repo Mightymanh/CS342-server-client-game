@@ -21,7 +21,7 @@
     </HBox>
 
 
-    <Button fx:id="enterButton" onAction="#buttonPress">Start Guess</Button>
+    <Button id="enterButton" fx:id="enterButton" onAction="#buttonPress">Start Guess</Button>
     </VBox>
 
 </HBox>

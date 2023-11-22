@@ -4,7 +4,7 @@
 
 
 #root {
-
+	-fx-background-color: #cecee1;
     -fx-spacing: 40;
 }
 
@@ -12,12 +12,31 @@
     -fx-min-width: 200;
     -fx-max-height: 100;
     -fx-font-weight: BOLD;
-    -fx-font-size: 50;
+    -fx-font-size: 40;
+	-fx-font-family: Arial;
+	-fx-padding: 0 0 20 0;
+}
 
+#start {
+	-fx-background-color: rgb(49, 64, 82);
+	-fx-text-fill: white;
+}
+
+#start:hover {
+	-fx-background-color: #778899;
+}
+
+#Exit {
+	-fx-background-color: rgb(194, 44, 50);
+	-fx-text-fill: white;
+}
+
+#Exit:hover {
+	-fx-background-color: rgb(255, 140, 127);
 }
 
 .button{
-    -fx-min-width: 200;
-    -fx-max-height: 100;
-    -fx-font-size: 20;
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
+    -fx-font-size: 30;
 }

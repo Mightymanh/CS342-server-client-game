@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="root" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="InitController"
-      prefHeight="500.0" prefWidth="600.0">
+<HBox fx:id="root" prefHeight="500.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InitController">
     <VBox fx:id="vboxContainer">
 
-        <Label fx:id="title"> Client Application </Label>
-        <Label fx:id="prompt"> Port Number: </Label>
-        <TextField fx:id="portBox" > </TextField>
+        <Label fx:id="title">Word Guessing Game</Label>
+        <Label fx:id="prompt" />
+        <TextField fx:id="portBox" alignment="CENTER" focusTraversable="false" promptText="Enter your port number">
+         <VBox.margin>
+            <Insets bottom="20.0" top="10.0" />
+         </VBox.margin></TextField>
         <Button fx:id="confirm">Confirm</Button>
 
     </VBox>
     </HBox>
-

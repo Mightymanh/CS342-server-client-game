@@ -44,31 +44,24 @@ public class CategoryController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //Image img = new Image("image/animal.png");
-     //   ImageView view = new ImageView(img);
-     //   view.setFitHeight(80);
-     //   view.setPreserveRatio(true);
-     //   animalButton.getBackground().
         this.CategoryChose = null;
         handleEvent();
-
     }
 
 
 
     public void displayCategory(ActionEvent e) {
         CategoryChose = ((Button)e.getTarget()).getText();
-
-        title.setText(CategoryChose);
+        System.out.println(CategoryChose);
+        title.setText(CategoryChose.toUpperCase());
     }
 
     public void buttonPress(){
         if(CategoryChose == null) {
-            title.setText("Must Choose a category to continue");
+            title.setText("Must Choose a Category");
             return;
         }
-        title.setText(CategoryChose);
+        title.setText(CategoryChose.toUpperCase());
 
 
        // this.client.receiveObject();
